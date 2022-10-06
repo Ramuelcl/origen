@@ -45,8 +45,8 @@ $layouts['encabezado'] = 'Tablero';
         <ul>
           @foreach ($menu2 as $menu)
             <li class="flex mb-2">
-              <div class="shadow-sm p-1 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
-              {{ $menu['text'] }}
+              <div class="shadow-sm p-2 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
+              <span class="self-center">{{ $menu['text'] }}</span>
             </li>
           @endforeach
         </ul>
@@ -55,14 +55,26 @@ $layouts['encabezado'] = 'Tablero';
         <ul>
           @foreach ($menu3 as $menu)
             <li class="flex mb-2">
-              <div class="shadow-sm p-1 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
-              {{ $menu['text'] }}
+              <div class="shadow-sm p-2 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
+              <span class="self-center">{{ $menu['text'] }}</span>
             </li>
           @endforeach
         </ul>
 
       </div>
-      <div>dos</div>
+      <div class="p-6 w-full">
+        <h3 class="text-4xl font-bold mb-5">{{ $menu['text'] }}</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2">
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p>col-6</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2">
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p>col-6</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </x-layouts.app>
