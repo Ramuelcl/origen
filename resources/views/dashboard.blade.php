@@ -45,7 +45,7 @@ $layouts['encabezado'] = 'Tablero';
         <ul>
           @foreach ($menu2 as $menu)
             <li class="flex mb-2">
-              <div class="shadow-sm p-2 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
+              <div class="shadow-sm p-1 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
               {{ $menu['text'] }}
             </li>
           @endforeach
@@ -55,7 +55,7 @@ $layouts['encabezado'] = 'Tablero';
         <ul>
           @foreach ($menu3 as $menu)
             <li class="flex mb-2">
-              <div class="shadow-sm p-2 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
+              <div class="shadow-sm p-1 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
               {{ $menu['text'] }}
             </li>
           @endforeach
