@@ -1,0 +1,28 @@
+created:
+    - app/Http/Controllers/Backend/UserSettingController.php
+    - app/Http/Controllers/Backend/ColorController.php
+    - database/factories/Backend/UserSettingFactory.php
+    - database/factories/Backend/ColorFactory.php
+    - database/migrations/2022_10_05_210305_create_user_settings_table.php
+    - database/migrations/2022_10_05_210306_create_colors_table.php
+    - app/Models/Backend/UserSetting.php
+    - app/Models/Backend/Color.php
+    - tests/Feature/Http/Controllers/Backend/UserSettingControllerTest.php
+    - tests/Feature/Http/Controllers/Backend/ColorControllerTest.php
+    - app/Http/Requests/Backend/UserSettingStoreRequest.php
+    - app/Http/Requests/Backend/UserSettingUpdateRequest.php
+    - app/Http/Requests/Backend/ColorStoreRequest.php
+    - app/Http/Requests/Backend/ColorUpdateRequest.php
+    - resources/views/userSetting/index.blade.php
+    - resources/views/userSetting/create.blade.php
+    - resources/views/userSetting/show.blade.php
+    - resources/views/userSetting/edit.blade.php
+    - resources/views/color/index.blade.php
+    - resources/views/color/create.blade.php
+    - resources/views/color/show.blade.php
+    - resources/views/color/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    Backend\UserSetting: { id: false, user_id: 'id foreign nullable default:null primary', theme: 'string:20 default:dark', language: 'string:5 default:fr-FR', autologin: 'boolean default:true', relationships: { hasOne: User } }
+    Backend\Color: { nombre: 'string:50 nullable default:null unique', slut: 'string:50 nullable default:null', hexa: 'string:6 nullable unique', rgb: 'string:20 nullable default:null', metadata: 'json nullable default:null' }

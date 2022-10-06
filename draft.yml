@@ -1,0 +1,61 @@
+models:
+  # Pais:
+  #   nombre: string:50 unique
+  #   bandera: string:255 nullable default:null
+  #   idioma: string:255 nullable default:null
+  #   timestamps: false
+  # Ciudad:
+  #   nombre: string:50
+  #   pais_id: id foreign nullable default:null
+  #   timestamps: false
+  #   relationships:
+  #     BelongsTo: Pais
+  # Direccion:
+  #   numero: string:8
+  #   calle: string:50
+  #   codPostal: string:6
+  #   ciudad_id: id foreign nullable default:null
+  #   relationships:
+  #     BelongsTo: Ciudad
+  # Entidad:
+  #   tipo: enum:perfil,cliente,proveedor,cli_pro
+  #   nombres: string:80
+  #   apellidos: string:80
+  #   activo: boolean default:true
+  #   eMail: string unique
+  #   direccion_id: id foreign nullable default:null
+  #   relationships:
+  #     BelongsTo: Direccion
+
+  # EtiquetasColors: # tabla pivote
+  #   id: false
+  #   etiqueta_id: id
+  #   color_id: id
+  #   timestamps: false
+    # primarykey:
+    #   etiqueta: bigInteger
+    #   color: bigInteger
+  #   relationships:
+  Backend\UserSetting:
+    id: false
+    user_id: id foreign nullable default:null primary
+    theme: string:20 default:dark
+    language: string:5 default:fr-FR
+    autologin: boolean default:true
+    relationships:
+      hasOne: User
+  Backend\Color:
+    nombre: string:50 nullable default:null unique
+    slut: string:50 nullable default:null
+    hexa: string:6 nullable unique
+    rgb: string:20 nullable default:null
+    metadata: json nullable default:null
+    # relationships:
+      # hasMany: Etiqueta
+      # belongsToMany: Etiqueta
+
+controllers:
+  Backend\UserSetting:
+    resource
+  Backend\Color:
+    resource

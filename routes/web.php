@@ -13,16 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('principal', App\Http\Controllers\PrincipalController::class);
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome')->name('home');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::resource('user-setting', App\Http\Controllers\Backend\UserSettingController::class);
+
+Route::resource('color', App\Http\Controllers\Backend\ColorController::class);
