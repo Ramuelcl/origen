@@ -6,14 +6,14 @@ $menu2 = [
         //     'href' => route('usuarios.index'), //banca.index
         'active' => setActive('usuarios.*'),
         'enable' => true,
-        'image' => 1,
+        'image' => 'users.svg',
     ],
     [
         'text' => 'Colores',
         'href' => route('color.index'),
         'active' => setActive('color.*'),
         'enable' => true,
-        'image' => 1,
+        'image' => 'star.svg',
     ],
 ];
 $menu3 = [
@@ -22,14 +22,14 @@ $menu3 = [
         // 'href' => route('config.index'), //banca.index
         'active' => setActive('config.*'),
         'enable' => true,
-        'image' => 1,
+        'image' => 'server.svg',
     ],
     [
         'text' => ' Iconos ',
         // 'href' => route('config.index'), //banca.index
         'active' => setActive('icon.*'),
         'enable' => false,
-        'image' => 1,
+        'image' => 'shopping-bag.svg',
     ],
 ];
 $layouts['encabezado'] = 'Tablero';
@@ -44,14 +44,20 @@ $layouts['encabezado'] = 'Tablero';
         <h6 class="font-bold">Tablas</h6>
         <ul>
           @foreach ($menu2 as $menu)
-            <li class="mb-2"><img src="public/heroicons/archive.svg">{{ $menu['text'] }}</li>
+            <li class="flex mb-2">
+              <div class="shadow-sm p-2 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
+              {{ $menu['text'] }}
+            </li>
           @endforeach
         </ul>
 
         <h6 class="font-bold">Configuración</h6>
         <ul>
           @foreach ($menu3 as $menu)
-            <li class="mb-2">{{ $menu['text'] }}</li>
+            <li class="flex mb-2">
+              <div class="shadow-sm p-2 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
+              {{ $menu['text'] }}
+            </li>
           @endforeach
         </ul>
 
