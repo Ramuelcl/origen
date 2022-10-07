@@ -19,21 +19,26 @@
   <!-- Styles -->
   @livewireStyles
 </head>
+@php
+$theme = [
+    'bg_color' => 'bg-blue-200',
+];
+@endphp
 
 <body class="font-sans antialiased bg-blue-300">
 
   <div class="flex flex-col h-screen">
-    <div class="bg-blue-500 sticky top-0">
-      <x-jet-banner />
+    <div class="{{ $theme['bg_color'] }} sticky top-0">
+      {{-- <x-jet-banner /> --}}
       @livewire('navigation-menu')
     </div>
-    <div class="bg-green-500 flex-grow">
+    <div class="{{ $theme['bg_color'] }} flex-grow">
       <!-- Page Heading -->
       @if (isset($header))
-        <header class="bg-white shadow">
-          <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <header>
+          <h6 class="bg-blue-200 px-1">
             {{ $header ?? null }}
-          </div>
+          </h6>
         </header>
       @endif
 
@@ -42,7 +47,7 @@
         {{ $slot ?? null }}
       </main>
     </div>
-    <div class="bg-blue-500 sticky bottom-0">footer</div>
+    <div class="{{ $theme['bg_color'] }} sticky bottom-0">footer</div>
   </div>
   @stack('modals')
 
