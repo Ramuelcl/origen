@@ -1,10 +1,10 @@
 <?php
 
-namespace [namespace];
+namespace App\Http\Livewire\Color;
 
 use Livewire\Component;
 
-class [class] extends Component
+class ShowPosts extends Component
 {
     public string $email = '';
     // public ?string $email = null; // Optional field
@@ -15,7 +15,7 @@ class [class] extends Component
 
     public function render()
     {
-        return view('[view]');
+        return view('livewire.color.show-posts');
     }
 
     public function updated($propertyName): void

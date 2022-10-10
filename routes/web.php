@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Color\Colores;
+use App\Http\Livewire\Color\ShowPosts;
 use App\Http\Controllers\PrincipalController;
 
 Route::controller(PrincipalController::class)
@@ -14,18 +14,23 @@ Route::controller(PrincipalController::class)
         route::post('/contacto', 'contacto')->name('contacto.enviar');
     });
 
-Route::controller(DashboardController::class)
-    ->prefix('dashboard')
-    ->as('')
-    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
-    ->group(function () {
-        Route::get('/', function () {
-            return view('dashboard');
-        })->name('dashboard');
-        // route::get('/colores', 'acercade')->name('acercade');
-        // route::get('/contacto', 'contacto')->name('contacto');
-        // route::post('/contacto', 'contacto')->name('contacto.enviar');
-    });
+Route::get('/dashboard', function () {
+    return view('backend.dashboard');
+})
+    ->prefix('')
+    ->name('dashboard')
+    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+
+// Route::controller(DashboardController::class)
+//     ->prefix('dashboard')
+//     ->as('')
+//     ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
+//     ->group(function () {
+//         Route::get('/', function () {
+//             return view('dashboard');
+//         })->name('dashboard');
+//         route::get('/colores', 'colores')->name('colores');
+//     });
 
 // Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 //     Route::get('/dashboard', function () {

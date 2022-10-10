@@ -10,7 +10,7 @@ $menu2 = [
     ],
     [
         'text' => 'Colores',
-        'href' => route('color.index'),
+        // 'href' => route('color.index'),
         'active' => setActive('color.*'),
         'enable' => true,
         'image' => 'star.svg',
@@ -85,7 +85,7 @@ $total = $users + $colores;
         </x-tarjeta>
       </div>
       <div class="grid grid-cols-12 sm:grid-cols-3 gap-3 mb-2 w-full">
-        @livewire('color.muestra-colores', ['titulo' => 'titulo de prueba'])
+        {{-- @livewire('color.muestra-colores', ['titulo' => 'titulo de prueba']) --}}
       </div>
       {{-- <div class="grid grid-cols-12 sm:grid-cols-3 gap-6 mb-2">
           <div class="bg-white p-6 rounded-lg shadow-sm">

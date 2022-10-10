@@ -10,7 +10,7 @@ $menu2 = [
     ],
     [
         'text' => 'Colores',
-        'href' => route('colores'),
+        // 'href' => route('colores'),
         'active' => setActive('color.*'),
         'enable' => true,
         'image' => 'star.svg',
