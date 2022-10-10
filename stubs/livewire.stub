@@ -1,0 +1,42 @@
+<?php
+
+namespace [namespace];
+
+use Livewire\Component;
+
+class [class] extends Component
+{
+    public string $email = '';
+    public ?string $email = null; // Optional field
+
+    protected $rules [
+        'email' => 'required|email',
+    ];
+
+    public function render()
+    {
+        return view('[view]');
+    }
+
+    public function updated($propertyName): void
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public function save(): void
+    {
+        $this->validate();
+
+        $user = User::updateOrCreate([
+          'email' => $email
+            ],
+            [
+                'phone' => $phone',
+                'city'  => $city
+            ]);
+
+        Session::put('msg', 'The message');
+
+        return Redirect::back();
+    }
+}

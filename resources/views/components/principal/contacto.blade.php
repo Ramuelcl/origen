@@ -1,9 +1,9 @@
 {{-- contacto.blade.php --}}
-<x-app-layout>
+<x-layouts.app>
 
   <div class="mx-auto py-12">
     <h1>Déjanos un mensaje</h1>
-    <form action="{{ route('contactanos.enviar') }}" method="post">
+    <form action="{{ route('contacto.enviar') }}" method="post">
       @csrf
       <fieldset>
         <label class="form-label" for="name">* Nombre:
@@ -45,4 +45,4 @@
     @endif
   </div>
 
-</x-app-layout>
+</x-layouts.app>

@@ -10,10 +10,17 @@ $menu2 = [
     ],
     [
         'text' => 'Colores',
-        'href' => route('color.index'),
+        'href' => route('colores'),
         'active' => setActive('color.*'),
         'enable' => true,
         'image' => 'star.svg',
+    ],
+    [
+        'text' => 'Etiquetas',
+        // 'href' => route('etiqueta.index'),
+        'active' => setActive('etiqueta.*'),
+        'enable' => true,
+        'image' => 'archive.svg',
     ],
 ];
 $menu3 = [
@@ -42,7 +49,7 @@ $menu3 = [
     @foreach ($menu2 as $menu)
       <li class="flex mb-2">
         <div class="shadow-sm p-2 rounded-lg"><img src="{{ asset('heroicons/solid/' . $menu['image']) }}"></div>
-        <span class="self-center">{{ $menu['text'] }}</span>
+        <x-jet-nav-link class="self-center" href="">{{ $menu['text'] }}</x-jet-nav-link>
       </li>
     @endforeach
   </ul>

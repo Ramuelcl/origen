@@ -1,8 +1,6 @@
 {{-- home.blade.php --}}
-<x-app-layout>
-
+<x-layouts.app>
   <div class="mx-auto py-12">
-    <h1>Página principal</h1>
+    <h1>Bienvenidos</h1>
   </div>
-
-</x-app-layout>
+</x-layouts.app>

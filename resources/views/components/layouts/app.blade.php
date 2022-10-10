@@ -21,11 +21,12 @@
 </head>
 @php
 $theme = [
-    'bg_color' => 'bg-blue-200',
+    'bg_color' => 'bg-blue-100',
+    // 'bg_color' => 'bg-blue-200',
 ];
 @endphp
 
-<body class="font-sans antialiased bg-blue-300">
+<body class="font-sans antialiased bg-blue-900">
 
   <div class="flex flex-col h-screen">
     <div class="{{ $theme['bg_color'] }} sticky top-0">

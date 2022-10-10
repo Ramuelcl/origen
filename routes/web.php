@@ -1,30 +1,40 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Color\Colores;
+use App\Http\Controllers\PrincipalController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::controller(PrincipalController::class)
+    ->prefix('')
+    ->as('')
+    ->group(function () {
+        route::get('/', 'home')->name('home');
+        route::get('/acercade', 'acercade')->name('acercade');
+        route::get('/contacto', 'contacto')->name('contacto');
+        route::post('/contacto', 'contacto')->name('contacto.enviar');
+    });
 
-Route::resource('principal', App\Http\Controllers\PrincipalController::class);
+Route::controller(DashboardController::class)
+    ->prefix('dashboard')
+    ->as('')
+    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
+    ->group(function () {
+        Route::get('/', function () {
+            return view('dashboard');
+        })->name('dashboard');
+        // route::get('/colores', 'acercade')->name('acercade');
+        // route::get('/contacto', 'contacto')->name('contacto');
+        // route::post('/contacto', 'contacto')->name('contacto.enviar');
+    });
 
-Route::get('/', function () {
-    return view('welcome')->name('home');
-});
+// Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+//     Route::get('/colores', Colores::class)->name('colores');
+// });
 
 Route::resource('user-setting', App\Http\Controllers\Backend\UserSettingController::class);
 
-Route::resource('color', App\Http\Controllers\Backend\ColorController::class);
+// Route::resource('color', App\Http\Controllers\Backend\ColorController::class);

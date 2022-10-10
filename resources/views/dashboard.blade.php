@@ -40,52 +40,54 @@ $total = $users + $colores;
 
 <x-layouts.app>
   {{-- nav-bar --}}
-  <div class="bg-gray-100 shadow-xl">
-    <x-slot name="header">{{ $layouts['encabezado'] }}</x-slot>
-    <div class="flex  h-screen">
-      {{-- tablero: views\layouts\partials\sidebar.blade.php --}}
-      @include('layouts.partials.sidebar')
+  <x-slot name="header">{{ $layouts['encabezado'] }}</x-slot>
+  <div class="flex h-screen">
+    {{-- tablero: views\layouts\partials\sidebar.blade.php --}}
+    @include('layouts.partials.sidebar')
 
-      <div class="p-6 w-full">
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-2">
-          <x-tarjeta>
-            <x-slot name="heading">
-              <p class="text-base flex-1">Usuarios</p>
-              <p class="text-green-500 bg-green-100 rounded-full font-mono px-2">
-                {{ number_format(($users / $total) * 100, 2, ',', '.') . '%' }}</p>
-            </x-slot>
+    <div class="p-6 w-full">
 
-            <div class="text-3xl font-bold my-2 text-center">{{ $users }}
-            </div>
+      <div class="mx-auto grid grid-cols-1 sm:px-6 lg:px-8 sm:grid-cols-4 gap-6 mb-2">
+        <x-tarjeta>
+          <x-slot name="heading">
+            <p class="text-base flex-1">Usuarios</p>
+            <p class="text-green-500 bg-green-100 rounded-full font-mono px-2">
+              {{ number_format(($users / $total) * 100, 2, ',', '.') . '%' }}</p>
+          </x-slot>
 
-            <x-slot name="footer">
-              <hr>
-              <x-jet-nav-link>Ver Más</x-jet-nav-link>
-            </x-slot>
-          </x-tarjeta>
+          <div class="text-3xl font-bold my-2 text-center">{{ $users }}
+          </div>
 
-          <x-tarjeta>
-            <x-slot name="heading">
-              <p class="text-base mr-2 flex-1">Colores</p>
-              <p class="text-green-500 bg-green-100 rounded-full font-mono py-0.5 px-2">
-                {{ number_format(($colores / $total) * 100, 2, ',', '.') . '%' }}</p>
-              </p>
-            </x-slot>
+          <x-slot name="footer">
+            <hr>
+            <x-jet-nav-link>Ver Más</x-jet-nav-link>
+          </x-slot>
+        </x-tarjeta>
 
-            <div class="text-3xl font-bold my-2 text-center">{{ $colores }}
-            </div>
+        <x-tarjeta>
+          <x-slot name="heading">
+            <p class="text-base mr-2 flex-1">Colores</p>
+            <p class="text-green-500 bg-green-100 rounded-full font-mono py-0.5 px-2">
+              {{ number_format(($colores / $total) * 100, 2, ',', '.') . '%' }}</p>
+            </p>
+          </x-slot>
 
-            <x-slot name="footer">
-              <hr>
-              <button
-                class="outline-none mr-1 mb-1 px-3 py-1 bg-transprent text-xs font-bold text-blue-500 uppercase focus:outline-none">
-                link button
-              </button>
-              <x-jet-nav-link>Ver Más</x-jet-nav-link>
-            </x-slot>
-          </x-tarjeta>
-        </div>
-        {{-- <div class="grid grid-cols-12 sm:grid-cols-3 gap-6 mb-2">
+          <div class="text-3xl font-bold my-2 text-center">{{ $colores }}
+          </div>
+
+          <x-slot name="footer">
+            <hr>
+            <button
+              class="outline-none mr-1 mb-1 px-3 py-1 bg-transprent text-xs font-bold text-blue-500 uppercase focus:outline-none">
+            </button>
+            <x-jet-nav-link>Ver Más</x-jet-nav-link>
+          </x-slot>
+        </x-tarjeta>
+      </div>
+      <div class="grid grid-cols-12 sm:grid-cols-3 gap-3 mb-2 w-full">
+        @livewire('color.muestra-colores', ['titulo' => 'titulo de prueba'])
+      </div>
+      {{-- <div class="grid grid-cols-12 sm:grid-cols-3 gap-6 mb-2">
           <div class="bg-white p-6 rounded-lg shadow-sm">
             @php
               $colores = [
@@ -123,16 +125,16 @@ $total = $users + $colores;
           @endforeach
         </div>
       </div> --}}
-      </div>
     </div>
+  </div>
 
 
-    {{-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  {{-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <div class="container mx-auto my-2 flex flex-row justify-center text-gray-600 border-b">
   <div class="flex flex-col items-center justify-center text-center p-1">
     <div class="py-1">gray-100</div>
-    <div class="w-24 h-24 rounded shadow-lg shadow-inner bg-gray-100"></div>
+    <div class="w-24 h-24 rounded shadow-inner bg-gray-100"></div>
     <div class="py-1">#F7FAFC</div>
   </div> --}}
 
