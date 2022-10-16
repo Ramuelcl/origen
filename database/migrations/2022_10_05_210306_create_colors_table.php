@@ -17,11 +17,31 @@ class CreateColorsTable extends Migration
 
         Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 50)->nullable()->default(null)->unique();
-            $table->string('slut', 50)->nullable()->default(null);
-            $table->string('hexa', 6)->nullable()->unique();
-            $table->string('rgb', 20)->nullable()->default(null);
-            $table->json('metadata')->nullable()->default(null);
+            $table
+                ->string('nombre', 50)
+                ->nullable()
+                ->default(null)
+                ->unique();
+            $table
+                ->string('slug', 50)
+                ->nullable()
+                ->default(null);
+            $table
+                ->string('hexa', 6)
+                ->nullable()
+                ->unique();
+            $table
+                ->string('rgb', 20)
+                ->nullable()
+                ->default(null);
+            $table
+                ->string('imagen')
+                ->nullable()
+                ->default(null);
+            $table
+                ->json('metadata')
+                ->nullable()
+                ->default(null);
             $table->timestamps();
         });
 

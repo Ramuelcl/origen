@@ -27,15 +27,16 @@ class ShowPosts extends Component
     {
         $this->validate();
 
-        $user = User::updateOrCreate([
-          'email' => $email
+        $user = User::updateOrCreate(
+            [
+                'email' => $email,
             ],
             [
                 'phone' => $phone,
-                'city'  => $city
-            ]);
+                'city' => $city,
+            ],
+        );
 
         return back()->with('message', __('Mensaje'));
-
     }
 }

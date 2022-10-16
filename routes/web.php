@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Color\ShowPosts;
 use App\Http\Controllers\PrincipalController;
+use App\Http\Controllers\backend\dashboardController;
+use App\Http\Livewire\Backend\Colores\ShowPosts;
 
 Route::controller(PrincipalController::class)
     ->prefix('')
@@ -14,31 +15,24 @@ Route::controller(PrincipalController::class)
         route::post('/contacto', 'contacto')->name('contacto.enviar');
     });
 
-Route::get('/dashboard', function () {
-    return view('backend.dashboard');
-})
-    ->prefix('')
-    ->name('dashboard')
-    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+// Route::get('/dashboard', function () {
+//     return view('backend.dashboard');
+// })
+//     ->prefix('')
+//     ->name('dashboard')
+//     ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
 
-// Route::controller(DashboardController::class)
-//     ->prefix('dashboard')
-//     ->as('')
-//     ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
-//     ->group(function () {
-//         Route::get('/', function () {
-//             return view('dashboard');
-//         })->name('dashboard');
-//         route::get('/colores', 'colores')->name('colores');
-//     });
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
+    // ->prefix('dashboard')
+    ->as('')
+    ->group(function () {
+        Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
+        Route::get('/colores', [ShowPosts::class, 'render'])->name('colores');
+    });
 
-// Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-
-//     Route::get('/colores', Colores::class)->name('colores');
-// });
+// Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
+//     ->get('/dashboard', ShowPosts::class)
+//     ->name('dashboard');
 
 Route::resource('user-setting', App\Http\Controllers\Backend\UserSettingController::class);
 
