@@ -18,12 +18,13 @@
 
   <!-- Styles -->
   @livewireStyles
+  <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free-6.0.0-web/css/all.min.css') }}">
 </head>
 @php
-$theme = [
-    'bg_color' => 'bg-blue-100',
-    // 'bg_color' => 'bg-blue-200',
-];
+  $theme = [
+      'bg_color' => 'bg-blue-100',
+      // 'bg_color' => 'bg-blue-200',
+  ];
 @endphp
 
 <body class="font-sans antialiased bg-blue-900">

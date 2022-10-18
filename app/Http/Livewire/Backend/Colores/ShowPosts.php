@@ -17,9 +17,15 @@ class ShowPosts extends Component
 
     public $query = '';
     public $data = [];
-    public $_id, $nombre, $slug, $hexa, $rgb;
-    public $sort = 'id';
-    public $direction = 'desc';
+    public $checaTodo = false,
+        $checaUno = false,
+        $_id = 0,
+        $nombre,
+        $slug,
+        $hexa,
+        $rgb;
+    public $orden = 'id';
+    public $direccion = 'desc';
     // public $url; // atrapa valores pasados por la url
     // NO FUNCIONA
     // escucha eventos hijo para renderizar la informacion
@@ -55,7 +61,7 @@ class ShowPosts extends Component
     {
         // $this->url = $url;
         // $this->data = Color::all();
-        $this->data = Color::orderBy($this->sort, $this->direction)->get();
+        $this->data = Color::orderBy($this->orden, $this->direccion)->get();
     }
 
     public function render()
@@ -70,16 +76,24 @@ class ShowPosts extends Component
         // dd(gettype($this->query), $this->query);
         //     $this->query = implode($this->query);
         // }
+        $largoMinimo = 4;
         if (gettype($this->query) == 'array') {
-            $search = '%' . implode($this->query) . '%';
+            $search = implode($this->query);
         } else {
-            $search = '%' . $this->query . '%';
+            $search = $this->query;
         }
         $len = Str::length($search);
-        if ($len > 4) {
-            $this->data = Color::where('nombre', 'like', $search)
+        $paso = intval($search);
+        // print $paso;
+        if ($paso > 0) {
+            $largoMinimo = 2;
+        }
+        if (true or $len > $largoMinimo) {
+            $search = '%' . $search . '%';
+            $this->data = Color::where('id', 'like', $search)
+                ->orWhere('nombre', 'like', $search)
                 ->orWhere('hexa', 'like', $search)
-                ->orderBy($this->sort, $this->direction)
+                ->orderBy($this->orden, $this->direccion)
                 ->get();
         } else {
             $this->mount();
@@ -98,24 +112,27 @@ class ShowPosts extends Component
         $this->reset(['query', 'isActive']);
         // Will reset both the query AND the isActive property.
     }
-    public function order($sort)
+    public function fncOrden($orden)
     {
-        // dump($sort);
-        if ($this->sort == $sort) {
-            $this->direction = $this->direction == 'desc' ? 'asc' : 'desc';
+        // dump($orden);
+        if ($this->orden == $orden) {
+            $this->direccion = $this->direccion == 'desc' ? 'asc' : 'desc';
         } else {
-            $this->sort = $sort;
-            $this->direction = 'asc';
+            $this->orden = $orden;
+            $this->direccion = 'asc';
         }
 
         $this->updatedQuery();
     }
 
-    public function CheckboxAll()
+    public function fncChecaTodo()
     {
-        //
+        $this->checa = $this->checaTodo;
+        foreach ($data as $key => $value) {
+            $data['checaUno'] = $this->checaTodo;
+        }
     }
-    public function CheckboxSelected()
+    public function fncChecaUno($id)
     {
         //
     }

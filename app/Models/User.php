@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\backend\UserSetting;
 // Spatie
 use Spatie\Permission\Traits\HasRoles;
 
@@ -53,4 +53,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = ['profile_photo_url'];
+
+    public function userSetting()
+    {
+        return $this->hasOne(UserSetting::class);
+    }
 }

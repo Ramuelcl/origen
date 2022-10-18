@@ -23,6 +23,6 @@ class Color extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'metadata' => 'array',
+        'metadata' => 'json',
     ];
 }
