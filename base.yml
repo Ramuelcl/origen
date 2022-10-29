@@ -27,38 +27,390 @@ models:
   #   relationships:
   #     BelongsTo: Direccion
 
-  # EtiquetasColors: # tabla pivote
-  #   id: false
-  #   etiqueta_id: id
-  #   color_id: id
-  #   timestamps: false
-    # primarykey:
-    #   etiqueta: bigInteger
-    #   color: bigInteger
-  #   relationships:
+    # backend\Profesion:
+  #   nombre: string:45
+  #   slug: string:45
 
-  Backend\UserSetting:
+  backend\Categoria:
+    nombre: string:45 nullable default:null unique
+    slug: string:45 nullable default:null charset:'utf8'
+    softDeletes: true
+    relationships:
+      morphedByMany: Post, Video, Imagen
+
+  backend\Perfil:
     id: false
-    user_id: id foreign nullable default:null primary
-    theme: string:20 default:dark
-    language: string:5 default:fr-FR
-    autologin: boolean default:true
+    user_id: id foreign:users.id primary
+    edad: unsignedTinyInteger
+    profesion: string:30 nullable default:null comment:"despues cambiar a tabla" charset:'utf8'
+    biografia: longtext default:null charset:'utf8'
+    website: string:45 default:null charset:'utf8'
+    softDeletes: true
     relationships:
       hasOne: User
 
-  Backend\Color:
-    nombre: string:50 nullable default:null unique
-    slug: string:50 nullable default:null
-    hexa: string:7 unique default:#
-    imagen: string:128 nullable default:null
-    rgb: string:20 nullable default:null
-    metadata: json nullable default:null
-    # relationships:
-      # hasOne: Etiqueta
-      # belongsToMany: Etiqueta
+  backend\UserSetting:
+    id: false
+    user_id: id foreign:users.id
+    theme: string:20 default:'dark' charset:'utf8'
+    language: string:5 default:'fr-FR' charset:'utf8'
+    autologin: boolean default:true
+    softDeletes: true
+    relationships:
+      hasOne: User
+
+  backend\Marcador:
+    nombre: string:45 nullable default:null unique charset:'utf8'
+    slug: string:45 nullable default:null charset:'utf8'
+    hexa: string:7 unique default:'#' charset:'utf8'
+    imagen: string:128 nullable default:null charset:'utf8'
+    rgb: string:20 nullable default:null charset:'utf8'
+    metadata: json nullable
+    softDeletes: true
+    relationships:
+      morphedByMany: Post:postIndex, Video:videoIndex, Imagen:imagenIndex
+
+  posts\Post:
+    user_id: id foreign:users.id
+    name: string:32 charset:'utf8'
+    contenido: longtext nullable charset:'utf8'
+    publicado: timestamp nullable useCurrent
+    actualizado: timestamp nullable useCurrent useCurrentOnUpdate
+    softDeletes: true
+    relationships:
+      morphToMany: Marcador:marcadorable, Categoria:categoriable
+
+  posts\Video:
+    name: string:32 charset:'utf8'
+    user_id: id foreign:users.id
+    url: string:128 charset:'utf8'
+    softDeletes: true
+    relationships:
+      morphToMany: Marcador:marcadorable, Categoria:categoriable
+
+  posts\Imagen:
+    name: string:32 charset:'utf8'
+    user_id: id foreign:users.id
+    url: string:128 charset:'utf8'
+    softDeletes: true
+    relationships:
+      morphToMany: Marcador:marcadorable, Categoria:categoriable
+
+
+
+
+# ==============================================
+# models:
+#   AllType:
+#     id: bigIncrements
+#     bigInteger: bigInteger
+#     binary: binary
+#     boolean: boolean
+#     char: char
+#     date: date
+#     dateTime: dateTime
+#     dateTimeTz: dateTimeTz
+#     decimal: decimal
+#     double: double
+#     enum: enum:1,2,3
+#     float: float
+#     fullText: fullText
+#     geometry: geometry
+#     geometryCollection: geometryCollection
+#     integer: integer
+#     ipAddress: ipAddress
+#     json: json
+#     jsonb: jsonb
+#     lineString: lineString
+#     longText: longText
+#     macAddress: macAddress
+#     mediumInteger: mediumInteger
+#     mediumText: mediumText
+#     morphs: morphs
+#     uuidMorphs: uuidMorphs
+#     multiLineString: multiLineString
+#     multiPoint: multiPoint
+#     multiPolygon: multiPolygon
+#     nullableMorphs: nullableMorphs
+#     nullableUuidMorphs: nullableUuidMorphs
+#     nullableTimestamps: nullableTimestamps
+#     point: point
+#     polygon: polygon
+#     rememberToken: rememberToken
+#     set: set:1,2,3
+#     smallInteger: smallInteger
+#     string: string
+#     text: text
+#     time: time
+#     timeTz: timeTz
+#     timestamp: timestamp
+#     timestampTz: timestampTz
+#     tinyInteger: tinyInteger
+#     unsignedBigInteger: unsignedBigInteger
+#     unsignedDecimal: unsignedDecimal
+#     unsignedInteger: unsignedInteger
+#     unsignedMediumInteger: unsignedMediumInteger
+#     unsignedSmallInteger: unsignedSmallInteger
+#     unsignedTinyInteger: unsignedTinyInteger
+#     uuid: uuid
+#     year: year
+
+# disable-auto-columns
+# models:
+#   State:
+# ->  id: false
+#     name: string
+#     code: string
+#     country_id: biginteger unsigned
+# ->  timestamps: false
+
+# belongs-to-many
+# models:
+#   Journey:
+#     name: string
+#     user_id: id
+#     relationships:
+#       belongstoMany: Diary
+
+
+# models:
+#   Models\Subscription:
+#     user_id: id foreign:users.id
+#     amount: decimal:8,3
+#     softDeletes: true
+
 
 # controllers:
-#   Backend\UserSetting:
-#     resource
-#   Backend\Color:
-#     resource
+#   Subscription:
+#     resource: index,show
+#
+#   Telegram:
+#     resource: all
+#
+#   Payment:
+#     create:
+#       render: payment.create
+#     store:
+#       validate: status,amount,user_id
+#       save: payment
+#       fire: NewPayment with:payment
+#       send: PaymentCreated to:payment.user with:payment
+#       flash: message
+#       redirect: payment.create
+
+
+# controller-configured
+# controllers:
+#   User:
+#     index:
+#       query: all:users
+#       render: user.index with:users
+#
+#     store:
+#       validate: name
+#       save: user
+#       flash: user.name
+#       redirect: post.index
+#
+# config:
+#   app_path: shift
+#   namespace: Some\App
+#   controllers_namespace: Other\Http
+
+# otro-ejemplo
+# models:
+#   Post:
+#     title: string:400
+#     content: longtext
+#     published_at: nullable timestamp
+#
+# controllers:
+#   Post:
+#     index:
+#       query: where:title where:content order:published_at limit:5
+#       render: post.index with:posts
+#
+#     edit:
+#       find: id
+#       render: post.edit with:post
+#
+#     update:
+#       find: post.id
+#       query: where:post.title take:3 pluck:post.id
+#       save: post
+#       redirect: post.edit
+
+# custom-pivot-table-name
+# models:
+#   User:
+#     name: string
+#     remember_token: remembertoken
+#     relationships:
+#       belongsToMany: Account:test
+
+#enum-options
+# models:
+#   Message:
+#     type: enum:SMS,Email,Push
+#     name: enum:1,"Jason McCreary",O'Brein,4 nullable
+
+#foreign-key-on-delete
+# models:
+#   Comment:
+#     site_id: foreign
+#     post_id: foreign onDelete:null
+#     comment_id: foreign onDelete:cascade
+#     author_id: foreign:user ondelete:restrict
+#     approver_id: foreign:user ondelete:no_action
+
+#foreign-key-shorthand
+# models:
+#   Comment:
+#     post_id: foreign
+#     author_id: foreign:user
+#     ccid: foreign:countries.code
+
+#full-crud-example
+# models:
+#   Post:
+#     title: string:400
+#     content: longtext
+#     published_at: nullable timestamp
+#
+# controllers:
+#   Post:
+#     index:
+#       query: all
+#       render: posts.index with:posts
+#
+#     create:
+#       render: posts.create with:post
+#
+#     store:
+#       validate: title, content
+#       save: post
+#       redirect: posts.index
+#
+#     show:
+#       find: post.id
+#       render: posts.show with:post
+#
+#     edit:
+#       find: post.id
+#       render: posts.edit with:post
+#
+#     update:
+#       validate: title, content
+#       find: post.id
+#       save: post
+#       redirect: posts.index
+#
+#     destroy:
+#       find: post.id
+#       delete: post
+
+#indexes
+# models:
+#   Post:
+#     id: unsignedInteger
+#     title: string
+#     parent_post_id: id
+#     author_id: id
+#     published_at: timestamp nullable
+#     word_count: integer unsigned
+#     location: geometry
+#     indexes:
+#       - primary: id
+#       - index: author_id
+#       - index: author_id, published_at
+#       - unique: title
+#       - unique: title, parent_post_id
+#       - spatialIndex: location
+
+#many-to-many-polymorphic-relationships
+# models:
+#   Post:
+#     name: string
+#     relationships:
+#       morphToMany: Tag
+#
+#   Video:
+#     name: string
+#     relationships:
+#       morphToMany: Tag
+#
+#   Tag:
+#     name: string
+#     relationships:
+#       morphedByMany: Post, Video
+
+#model-modifiers
+# models:
+#   Modifier:
+#     id: increments
+#     title: string nullable
+#     name: string:1000 unique charset:'utf8'
+#     content: string default:''
+#     amount: float:9,3
+#     total: double:10,2
+#     overflow: decimal:99,99
+#     ssn: char:11
+#     role: enum:user,admin,owner
+
+#model-relationships-morphone-morphmany-with-fqn
+# models:
+#   Flag:
+#     user_id: id
+#     relationships:
+#       morphOne: \Other\Package\Order:stars
+#       morphMany: \Other\Package\Duration, \App\MyCustom\Folder\Transaction:line
+
+#model-relationships-with-full-model-namespaces
+# models:
+#   Recurrency:
+#     user_id: id
+#     product_id: uuid
+#     relationships:
+#       belongsToMany: \Some\Package\Team
+#       hasMany: \Other\Package\Order
+#       hasOne: \Other\Package\Duration, \App\MyCustom\Folder\Transaction
+
+#model-relationships - Do not generate foreign key for simple UUID column
+# models:
+#   Subscription:
+#     user_id: id
+#     product_id: uuid
+#     relationships:
+#       belongsToMany: Team
+#       hasMany: Order
+#       hasOne: Duration, Transaction
+
+#optimize
+# models:
+#   Optimize:
+#     tiny: tinyInteger unsigned
+#     small: smallInteger unsigned
+#     medium: mediumInteger unsigned
+#     int: integer unsigned
+#     dec: decimal:8,2 unsigned
+#     big: bigInteger unsigned
+#     foo: morphs
+#     bar: uuidMorphs nullable
+#     baz: nullableMorphs
+#     foobar: uuidMorphs
+#     foobarbaz: nullableUuidMorphs
+#     timestamps: true
+
+#pascal-case-model-names
+# models:
+#   Broker:
+#     name: string
+#     relationships:
+#       belongsToMany: BrokerType
+
+#   BrokerType:
+#     name: string
+#     relationships:
+#       belongsToMany: Broker
+
+#

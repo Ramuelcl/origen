@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserSettingsTable extends Migration
+class CreateVideosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +15,12 @@ class CreateUserSettingsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('user_settings', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate()->default(null)->primary();
-            $table->string('theme', 20)->default('dark');
-            $table->string('language', 5)->default('fr-FR');
-            $table->boolean('autologin')->default(true);
+        Schema::create('videos', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 32)->charset('utf8');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('url', 128)->charset('utf8');
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -33,6 +34,6 @@ class CreateUserSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_settings');
+        Schema::dropIfExists('videos');
     }
 }

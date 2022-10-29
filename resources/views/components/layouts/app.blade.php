@@ -15,10 +15,24 @@
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Styles -->
   @livewireStyles
   <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free-6.0.0-web/css/all.min.css') }}">
+  <style>
+    .dotted:before {
+      background: url("{{ asset('grilla50px.png') }}") repeat left top rgba(0, 0, 0, 0.5);
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+    }
+  </style>
 </head>
 @php
   $theme = [
@@ -27,34 +41,41 @@
   ];
 @endphp
 
-<body class="font-sans antialiased bg-blue-900">
+{{-- <body class="font-sans antialiased dotted"> muestra una malla superpuesta --}}
 
-  <div class="flex flex-col h-screen">
-    <div class="{{ $theme['bg_color'] }} sticky top-0">
-      {{-- <x-jet-banner /> --}}
+<body class="font-sans antialiased">
+  <x-contenedor>
+    <x-jet-banner />
+
+    <div class="min-h-screen bg-gray-100">
       @livewire('navigation-menu')
-    </div>
-    <div class="{{ $theme['bg_color'] }} flex-grow">
+
+      {{-- @include('layouts.partials.DarkNav') --}}
       <!-- Page Heading -->
       @if (isset($header))
-        <header>
-          <h6 class="bg-blue-200 px-1">
-            {{ $header ?? null }}
-          </h6>
+        <header class="bg-white shadow">
+          <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {{ $header }}
+          </div>
         </header>
       @endif
 
       <!-- Page Content -->
       <main>
-        {{ $slot ?? null }}
+        {{ $slot }}
       </main>
     </div>
-    <div class="{{ $theme['bg_color'] }} sticky bottom-0">footer</div>
-  </div>
+  </x-contenedor>
+
   @stack('modals')
 
   @livewireScripts
-
+  <script>
+    Livewire.on('alert', function($title = 'Title', $msg = 'Ok', $type = 'Success') {
+      Swal.fire(
+        $title, $msg, $type)
+    })
+  </script>
 </body>
 
 </html>

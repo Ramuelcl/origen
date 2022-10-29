@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Factories\Backend;
+namespace Database\Factories\backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Backend\User;
-use App\Models\Backend\UserSetting;
+use App\Models\User;
+use App\Models\backend\UserSetting;
 
 class UserSettingFactory extends Factory
 {
@@ -24,11 +24,10 @@ class UserSettingFactory extends Factory
     public function definition()
     {
         return [
-            // 'user_id' => $id,
-            'theme' => $this->faker->randomElements($array = ['dark', 'light', 'medium'], $count = 1), // array('dark')
-            'language' => $this->faker->randomElements($array = ['fr-FR', 'es-ES', 'en-EN'], $count = 1),
-            'autologin' => 1,
-            $this->faker->boolean($chanceOfGettingTrue = 70), // true,
+            'user_id' => User::factory(),
+            'theme' => $this->faker->regexify('[A-Za-z0-9]{20}'),
+            'language' => $this->faker->regexify('[A-Za-z0-9]{5}'),
+            'autologin' => $this->faker->boolean,
         ];
     }
 }

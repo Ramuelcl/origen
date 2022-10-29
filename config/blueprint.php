@@ -111,7 +111,7 @@ return [
     | generated "unguarded" models.
     |
     */
-    'use_guarded' => true,
+    'use_guarded' => false,
 
     /*
     |--------------------------------------------------------------------------

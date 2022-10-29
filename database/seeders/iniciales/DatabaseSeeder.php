@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
-use Database\Seeders\ColorSeeder;
+use Database\Seeders\MarcadorSeeder;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             //
             // DireccionSeeder::class,
             // TelefonoSeeder::class,
-            ColorSeeder::class,
+            MarcadorSeeder::class,
             // TablaSeeder::class,
             //
             // BancaSeeder::class,

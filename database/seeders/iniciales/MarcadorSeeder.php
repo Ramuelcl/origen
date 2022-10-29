@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\backend\Color;
+use App\Models\backend\Marcador;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\DB;
 
-class ColorSeeder extends Seeder
+class MarcadorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,6 +26,6 @@ class ColorSeeder extends Seeder
         }
         Storage::makeDirectory($filePath);
 
-        Color::factory(1)->create();
+        Marcador::factory(1)->create();
     }
 }

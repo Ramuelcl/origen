@@ -1,42 +1,74 @@
 <div>
   {{-- método mágico: wire:click="$set('open', true)" --}}
-  <x-jet-danger-button wire:click="fncOpen()">{{ __('New') }}</x-jet-danger-button>
-  <div>
-    <x-jet-dialog-modal wire:model="open">
+  <a class="btn btn-green" wire:click="fncOpen()">
+    <i class="fas fa-plus"></i>
+    <p>{{ __('New') }}</p>
+  </a>
 
-      <x-slot name="title">{{ __('create new') }}</x-slot>
+  <x-jet-dialog-modal wire:model="open">
+    <x-slot name="title">{{ __('create new') }}</x-slot>
+
+    <div>
       <x-slot name="content">
 
-        <div class="mb-4">
-          <x-jet-label value="Nombre" />
-          <x-jet-input type="text" wire:model="nombre" class="w-full"></x-jet-input>
-          <x-jet-input-error for="nombre" />
-          {{ $nombre }}
-        </div>
+        <div class="flex m-4">
+          <div class="w-8/12 md:w-1/2
+    p-4 bg-blue-500 mb-1">
+            <hr>
+            <div class="mb-4">
+              <x-jet-label value="Nombre" />
+              <x-jet-input type="text" wire:model.defer="nombre" class="w-full"></x-jet-input>
+              <x-jet-input-error for="nombre" />
+            </div>
 
-        <div class="mb-4">
-          <x-jet-label value="Hexa" />
-          <x-jet-input type="color" wire:model="hexa" class="w-full"></x-jet-input>
-          <x-jet-input-error for="hexa" />
-          {{ $hexa }}
-        </div>
+            <div class="mb-4">
+              <x-jet-label value="Hexa" />
+              <x-jet-input type="color" wire:model.defer="hexa" class="w-full h-14" onchange="colorRGB(event)">
+              </x-jet-input>
+              <x-jet-input-error for="hexa" />
+            </div>
 
-        <div class="mb-4">
-          <x-jet-label value="rgb" />
-          <x-jet-input type="input" wire:model="rgb" class="w-full"></x-jet-input>
-          {{-- <textarea rows="6" wire:model.defer="rgb" class="form-control w-full"></textarea> --}}
-          <x-jet-input-error for="rgb" />
-          {{ $rgb }}
+            {{-- <div class="mb-4">
+            <x-jet-label value="rgb" />
+            <x-jet-input type="input" wire:model.defer="rgb" class="w-full"></x-jet-input>
+
+            <x-jet-input-error for="rgb" />
+          </div> --}}
+
+            <div class="mb-4">
+              <x-jet-label value="imagen" />
+              <x-jet-input type="file" wire:model="imagen" id="{{ $idImagen }}"></x-jet-input>
+              <x-jet-input-error for="imagen" />
+            </div>
+            <div wire:loading wire:target="imagen">
+              <strong>{{ __('Imagen cargando') }}</strong>
+              <span class="block sm:inline">{{ __('espere un momento') }}</span>
+            </div>
+
+          </div>
+          <div class="w-4/12 md:w-1/2
+    p-4 bg-green-700 mb-1">
+            <x-imagen1>
+              @if ($imagen)
+                <img src="{{ $imagen->temporaryUrl() }}" class="object-scale-down">
+              @endif
+            </x-imagen1>
+
+          </div>
+          <hr>
         </div>
 
       </x-slot>
 
       <x-slot name="footer">
-        <x-jet-secondary-button wire:click="fncOpen()">{{ __('cancel') }}</x-jet-secondary-button>
-        <x-jet-danger-button wire:click="fncSave()" wire:loading.attr="disabled" wire:target="fncSave"
-          class="disabled:opacity-25 mx-4">{{ __('save') }}
-        </x-jet-danger-button>
+        <x-jet-button tipo="cancel" wire:click="fncOpen()">{{ __('cancel') }}
+        </x-jet-button>
+
+        <x-jet-button tipo="save" wire:click="fncSave()" wire:loading.attr="disabled" wire:target="fncSave, imagen"
+          class="disabled:opacity-25">
+          {{ __('save') }}
+        </x-jet-button>
       </x-slot>
-    </x-jet-dialog-modal>
-  </div>
+
+  </x-jet-dialog-modal>
 </div>

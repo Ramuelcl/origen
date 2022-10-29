@@ -48,9 +48,11 @@ class ShowPosts extends Component
 
     public $query = '';
 
-    protected $rules = [
-        'email' => 'required|email',
-    ];
+    protected $listeners = ['renderParent' => 'render'];
+
+    // protected $rules = [
+    //     'email' => 'required|email',
+    // ];
 
     public function mount($email = '')
     {

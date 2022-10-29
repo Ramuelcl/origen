@@ -1,5 +1,8 @@
 <div class="mt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
+  {{-- <x-alerta tipo="info">
+    <x-slot name="titulo">titulo de prueba</x-slot>
+    <h6>texto de prueba</h6>
+  </x-alerta> --}}
   <x-slot name="header">
     {{ __('Colores') }}
   </x-slot>
@@ -88,7 +91,7 @@
             </td>
             <td class="px-2 py-2">
               <div class="text-sm text-gray-900">
-                #{{ $item->hexa }}
+                {{ $item->hexa }}
               </div>
             </td>
             <td class="px-2 py-2">
@@ -96,20 +99,20 @@
                 {{ $item->rgb }}
               </div>
             </td>
-            <td width="10px">
+            <td>
               {{-- la ruta debe ser un arreglo de rutas --}}
               {{-- <a href="{{ route('backend.colores.edit', $item) }}"
               class="rounded-md text-white focus:ring-green-800 px-2 py-1 text-sm bg-green-500 shadow-md w-full hover:bg-green-300">{{ __('edit') }}</a> --}}
               {{-- @livewire('colores-editar', ['data' => $item], key($item->id)) --}}
-              boton
+              @livewire('backend.colores.edit-posts', ['post' => $item], key($item->id))
             </td>
-            <td width="10px">
+            <td>
               <form action="" method="post">
-                {{-- {{ route('backend.colores.destroy', $item) }} --}}
+                {{-- {{ route('backend.showPost.destroy', $item) }} --}}
                 @csrf
                 @method('delete')
-                <button type="submit"
-                  class="rounded-md text-white focus:ring-red-600 px-2 py-1 text-sm bg-red-500 shadow-md w-full hover:bg-red-300">{{ __('delete') }}</button>
+                <x-jet-button tipo='delete' type="submit">
+                  {{ __('delete') }}</x-jet-button>
               </form>
             </td>
           </tr>

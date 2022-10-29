@@ -4,18 +4,19 @@ namespace Database\Factories\backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-// use App\Models\Tag;
-use App\Models\backend\Color;
+use Illuminate\Support\Facades\Storage;
+
+use App\Models\backend\Marcador;
 use Illuminate\Support\Facades\DB;
 
-class ColorFactory extends Factory
+class MarcadorFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Color::class;
+    protected $model = Marcador::class;
 
     /**
      * Define the model's default state.
@@ -27,10 +28,14 @@ class ColorFactory extends Factory
         $this->fncCrearColores();
         return [];
     }
+
     public function fncCrearColores()
     {
-        $filePath = storage_path('app\public') . '\sistema\imagenes';
-        dump($filePath);
+        Storage::deleteDirectory('images/avatars');
+        Storage::makeDirectory('images/avatars');
+        $filePath = 'public/storage/images/avatars';
+        // dump($filePath);
+
         $colores = $this->colores();
         foreach ($colores as $key => $v) {
             // $v = $colores[$this->i];
@@ -39,18 +44,21 @@ class ColorFactory extends Factory
             $slug = Str::slug($v['name']);
             $hexa = '#' . $v['hexa'];
             $rgb = $v['rgb'];
-            $meta = json_encode([$nombre, $hexa, $rgb]);
-            $imagen = 'colores/' . $this->faker->image($filePath, 640, 480, null, false);
-            $imagen2 = $this->faker->imageUrl(640, 480, null, false);
-            // $imagen = 'colores/' . $this->faker->image($dir = 'public/storage/sistema', $width = 640, $height = 480, $category = null, $word = false);
+            $metadata = json_encode([$nombre, $hexa, $rgb]);
+
+            $imagen = 'colores/' . $this->faker->image($dir = $filePath, $width = 640, $height = 480, $category = null, $word = false);
+            // $imagen = $this->faker->imageUrl(640, 480, null, false);
+
             // dump(['i' => $this->i, 'colores son:' => count($colores), $imagen, $imagen1]);
             // dd(['this' => $this, 'imagen' => $imagen]);
 
-            // Storage::put('imagenes', $imagen);
+            // Storage::put('images', $imagen);
 
-            $sql = "INSERT INTO colors (`nombre`,`slug`,`hexa`,`rgb`,`metadata`,`imagen`) VALUES (
-                '$nombre', '$slug', '$hexa', '$rgb', '$meta', '$imagen2'
-            );";
+//            $sql = "INSERT INTO marcadores (`nombre`,`slug`,`hexa`,`rgb`,`metadata`,`imagen`) VALUES (
+//                '$nombre', '$slug', '$hexa', '$rgb', '$metadata', '$imagen'
+//            );";
+            $sql = "INSERT INTO marcadores (`nombre`,`slug`,`hexa`,`rgb`,`metadata`) VALUES (
+                '$nombre', '$slug', '$hexa', '$rgb', '$metadata');";
 
             DB::statement($sql);
             // $this->i++;

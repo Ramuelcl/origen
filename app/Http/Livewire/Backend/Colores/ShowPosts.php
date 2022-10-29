@@ -28,8 +28,12 @@ class ShowPosts extends Component
     public $direccion = 'desc';
     // public $url; // atrapa valores pasados por la url
     // NO FUNCIONA
+
     // escucha eventos hijo para renderizar la informacion
-    protected $listeners = ['renderParent' => 'render'];
+    // protected $listeners = ['renderParent' => 'render'];
+    // cuando es el mismo nombre se puede llamar así
+    protected $listeners = ['render'];
+
     public $status = 'ingresar';
 
     public $display = [
@@ -44,6 +48,8 @@ class ShowPosts extends Component
         'buscar' => 'Buscar...',
     ];
     public $fields = [
+        //0
+        ['name' => 'chechaUno', 'input' => ['type' => 'checkbox', 'label' => '', 'display' => false, 'disabled' => true], 'table' => ['titre' => '#', 'display' => true, 'disabled' => true]],
         //0
         ['name' => 'id', 'input' => ['type' => 'text', 'label' => '', 'display' => false, 'disabled' => true], 'table' => ['titre' => '#', 'display' => true, 'disabled' => true]],
         //1
@@ -88,7 +94,7 @@ class ShowPosts extends Component
         if ($paso > 0) {
             $largoMinimo = 2;
         }
-        if (true or $len > $largoMinimo) {
+        if ($len > $largoMinimo) {
             $search = '%' . $search . '%';
             $this->data = Color::where('id', 'like', $search)
                 ->orWhere('nombre', 'like', $search)
@@ -128,8 +134,8 @@ class ShowPosts extends Component
     public function fncChecaTodo()
     {
         $this->checa = $this->checaTodo;
-        foreach ($data as $key => $value) {
-            $data['checaUno'] = $this->checaTodo;
+        foreach ($this->data as $key => $value) {
+            $this->data['checaUno'] = $this->checaTodo;
         }
     }
     public function fncChecaUno($id)
