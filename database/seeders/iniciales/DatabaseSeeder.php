@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
             // DireccionSeeder::class,
             // TelefonoSeeder::class,
             MarcadorSeeder::class,
+            CategoriaSeeder::class,
             // TablaSeeder::class,
             //
             // BancaSeeder::class,

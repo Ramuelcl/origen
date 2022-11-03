@@ -70,12 +70,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::factory()
-            // ->has(UserSetting::factory()->count(1), 'userSetting')
-            ->count(48)
-            ->create();
-        // User::factory(48)->create(function ($u) {
-        //     UserSetting::factory(1)->make([$u->id]);
-        // });
+        // $user = User::factory()
+        //     // ->has(UserSetting::factory()->count(1), 'userSetting')
+        //     ->count(48)
+        //     ->create();
+        dd('aquí llega');
+        User::factory(48)->create(function ($u) {
+            UserSetting::factory(1)->make([$u->id]);
+            Perfil::factory(1)->make([$u->id]);
+        });
     }
 }

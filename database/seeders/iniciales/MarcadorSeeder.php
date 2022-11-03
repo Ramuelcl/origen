@@ -18,14 +18,6 @@ class MarcadorSeeder extends Seeder
      */
     public function run()
     {
-        // echo asset('storage/file.txt');
-
-        $filePath = 'public\sistema\imagenes';
-        if (Storage::exists($filePath)) {
-            Storage::deleteDirectory($filePath);
-        }
-        Storage::makeDirectory($filePath);
-
-        Marcador::factory(1)->create();
+        $m = Marcador::factory()->make();
     }
 }

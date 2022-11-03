@@ -55,6 +55,7 @@ class DatabaseSeeder extends Seeder
             //
             // DireccionSeeder::class,
             // TelefonoSeeder::class,
+            CategoriaSeeder::class,
             MarcadorSeeder::class,
             // TablaSeeder::class,
             //
@@ -64,7 +65,6 @@ class DatabaseSeeder extends Seeder
             // CursoSeeder::class,
             // ClientSeeder::class,
             // ProjectSeeder::class,
-            // TagSeeder::class,
             // InvoiceSeeder::class,
         ]);
     }

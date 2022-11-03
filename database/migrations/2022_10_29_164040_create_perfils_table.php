@@ -36,7 +36,7 @@ class CreatePerfilsTable extends Migration
                 ->default(null)
                 ->charset('utf8');
             $table
-                ->string('website', 45)
+                ->string('website', 128)
                 ->default(null)
                 ->charset('utf8');
             $table->softDeletes();

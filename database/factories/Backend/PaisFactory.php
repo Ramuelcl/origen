@@ -4,16 +4,16 @@ namespace Database\Factories\backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\backend\Categoria;
+use App\Models\backend\Pais;
 
-class CategoriaFactory extends Factory
+class PaisFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Categoria::class;
+    protected $model = Pais::class;
 
     /**
      * Define the model's default state.
@@ -22,10 +22,10 @@ class CategoriaFactory extends Factory
      */
     public function definition()
     {
-        $nombre = ucwords($this->faker->words($this->faker->numberBetween(1, 3), $string = true));
         return [
-            'nombre' => $nombre,
-            'slug' => Str::slug($nombre),
+            'nombre' => $this->faker->regexify('[A-Za-z0-9]{50}'),
+            'bandera' => $this->faker->regexify('[A-Za-z0-9]{255}'),
+            'idioma' => $this->faker->regexify('[A-Za-z0-9]{255}'),
         ];
     }
 }

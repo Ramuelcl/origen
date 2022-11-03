@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserSetting extends Model
+class Tabla extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -15,7 +15,15 @@ class UserSetting extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'theme', 'language', 'autologin'];
+    protected $fillable = [
+        'tabla',
+        'tabla_id',
+        'nombre',
+        'descripcion',
+        'valor1',
+        'valor2',
+        'valor3',
+    ];
 
     /**
      * The attributes that should be cast to native types.
@@ -23,17 +31,9 @@ class UserSetting extends Model
      * @var array
      */
     protected $casts = [
-        'user_id' => 'integer',
-        'autologin' => 'boolean',
+        'tabla' => 'integer',
+        'tabla_id' => 'integer',
+        'valor1' => 'decimal:2',
+        'valor3' => 'boolean',
     ];
-
-    public function user()
-    {
-        return $this->hasOne(\App\Models\User::class);
-    }
-
-    // public function user()
-    // {
-    //     return $this->belongsTo(\App\Models\User::class);
-    // }
 }

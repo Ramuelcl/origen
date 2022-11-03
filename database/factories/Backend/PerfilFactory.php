@@ -23,12 +23,17 @@ class PerfilFactory extends Factory
      */
     public function definition()
     {
+        $edad = $this->faker->numberBetween($min = 18, $max = 65);
+        //randomNumber($nbDigits = 2, $strict = false),
+        $profesion = ucwords($this->faker->words($this->faker->numberBetween(1, 2), $string = true));
+        $biografia = ucwords($this->faker->words($this->faker->numberBetween(10, 93), $string = true));
+
         return [
-            'user_id' => User::factory(),
-            'edad' => $this->faker->randomDigitNotNull,
-            'profesion' => $this->faker->regexify('[A-Za-z0-9]{30}'),
-            'biografia' => $this->faker->text,
-            'website' => $this->faker->regexify('[A-Za-z0-9]{45}'),
+            // 'user_id' => $this->id,
+            'edad' => $edad,
+            'profesion' => $profesion,
+            'biografia' => $biografia,
+            'website' => $this->faker->url(),
         ];
     }
 }

@@ -1,33 +1,32 @@
 created:
-    - database/factories/backend/CategoriaFactory.php
-    - database/factories/backend/PerfilFactory.php
-    - database/factories/backend/UserSettingFactory.php
-    - database/factories/backend/MarcadorFactory.php
-    - database/factories/posts/PostFactory.php
-    - database/factories/posts/VideoFactory.php
-    - database/factories/posts/ImagenFactory.php
-    - database/migrations/2022_10_29_164039_create_categorias_table.php
-    - database/migrations/2022_10_29_164040_create_perfils_table.php
-    - database/migrations/2022_10_29_164041_create_user_settings_table.php
-    - database/migrations/2022_10_29_164042_create_marcadors_table.php
-    - database/migrations/2022_10_29_164043_create_posts_table.php
-    - database/migrations/2022_10_29_164044_create_videos_table.php
-    - database/migrations/2022_10_29_164045_create_imagens_table.php
-    - database/migrations/2022_10_29_164046_create_categoriaables_table.php
-    - database/migrations/2022_10_29_164047_create_marcadorables_table.php
-    - app/Models/backend/Categoria.php
-    - app/Models/backend/Perfil.php
-    - app/Models/backend/UserSetting.php
-    - app/Models/backend/Marcador.php
-    - app/Models/posts/Post.php
-    - app/Models/posts/Video.php
-    - app/Models/posts/Imagen.php
+    - database/factories/backend/PaisFactory.php
+    - database/factories/backend/CiudadFactory.php
+    - database/factories/backend/DireccionFactory.php
+    - database/factories/backend/EntidadFactory.php
+    - database/factories/backend/TablaFactory.php
+    - database/migrations/2022_11_03_135321_create_pais_table.php
+    - database/migrations/2022_11_03_135322_create_ciudads_table.php
+    - database/migrations/2022_11_03_135323_create_direccions_table.php
+    - database/migrations/2022_11_03_135324_create_entidads_table.php
+    - database/migrations/2022_11_03_135325_create_tablas_table.php
+    - database/migrations/2022_11_03_135326_create_direcciones_table.php
+    - database/migrations/2022_11_03_135327_create_entidadables_table.php
+    - app/Models/backend/Pais.php
+    - app/Models/backend/Ciudad.php
+    - app/Models/backend/Direccion.php
+    - app/Models/backend/Entidad.php
+    - app/Models/backend/Tabla.php
 models:
+    backend\Categoria: { nombre: 'string:45 nullable', slug: 'string:45 nullable' }
+    backend\Marcador: { nombre: 'string:45 nullable', slug: 'string:45 nullable', hexa: 'string:7 default:#', imagen: 'string:128 nullable', rgb: 'string:20 nullable', metadata: 'json nullable' }
+    backend\Perfil: { user_id: 'biginteger unsigned', edad: 'boolean unsigned', profesion: 'string:30 nullable', biografia: text, website: 'string:128' }
+    backend\UserSetting: { user_id: 'biginteger unsigned', theme: 'string:20 default:dark', language: 'string:5 default:fr-FR', autologin: 'boolean default:1' }
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, two_factor_secret: 'text nullable', two_factor_recovery_codes: 'text nullable', two_factor_confirmed_at: 'datetime nullable', is_active: 'boolean default:1', remember_token: 'string:100 nullable', current_team_id: 'biginteger unsigned nullable', profile_photo_path: 'string:2048 nullable' }
-    backend\Categoria: { nombre: 'string:45 nullable default:null unique', slug: "string:45 nullable default:null charset:'utf8'", softdeletes: softDeletes, relationships: { morphedByMany: 'Post, Video, Imagen' } }
-    backend\Perfil: { id: false, user_id: 'id foreign:users.id primary', edad: unsignedTinyInteger, profesion: 'string:30 nullable default:null comment:"despues cambiar a tabla" charset:''utf8''', biografia: "longtext default:null charset:'utf8'", website: "string:45 default:null charset:'utf8'", softdeletes: softDeletes, relationships: { hasOne: User } }
-    backend\UserSetting: { id: false, user_id: 'id foreign:users.id', theme: "string:20 default:'dark' charset:'utf8'", language: "string:5 default:'fr-FR' charset:'utf8'", autologin: 'boolean default:true', softdeletes: softDeletes, relationships: { hasOne: User } }
-    backend\Marcador: { nombre: "string:45 nullable default:null unique charset:'utf8'", slug: "string:45 nullable default:null charset:'utf8'", hexa: "string:7 unique default:'#' charset:'utf8'", imagen: "string:128 nullable default:null charset:'utf8'", rgb: "string:20 nullable default:null charset:'utf8'", metadata: 'json nullable', softdeletes: softDeletes, relationships: { morphedByMany: 'Post:postIndex, Video:videoIndex, Imagen:imagenIndex' } }
-    posts\Post: { user_id: 'id foreign:users.id', name: "string:32 charset:'utf8'", contenido: "longtext nullable charset:'utf8'", publicado: 'timestamp nullable useCurrent', actualizado: 'timestamp nullable useCurrent useCurrentOnUpdate', softdeletes: softDeletes, relationships: { morphToMany: 'Marcador:marcadorable, Categoria:categoriable' } }
-    posts\Video: { name: "string:32 charset:'utf8'", user_id: 'id foreign:users.id', url: "string:128 charset:'utf8'", softdeletes: softDeletes, relationships: { morphToMany: 'Marcador:marcadorable, Categoria:categoriable' } }
-    posts\Imagen: { name: "string:32 charset:'utf8'", user_id: 'id foreign:users.id', url: "string:128 charset:'utf8'", softdeletes: softDeletes, relationships: { morphToMany: 'Marcador:marcadorable, Categoria:categoriable' } }
+    posts\Imagen: { name: 'string:32', user_id: 'biginteger unsigned', url: 'string:128' }
+    posts\Post: { user_id: 'biginteger unsigned', name: 'string:32', contenido: 'text nullable', publicado: 'datetime nullable default:CURRENT_TIMESTAMP', actualizado: 'datetime nullable default:CURRENT_TIMESTAMP' }
+    posts\Video: { name: 'string:32', user_id: 'biginteger unsigned', url: 'string:128' }
+    backend\Pais: { nombre: 'string:50 unique', bandera: 'string:255 nullable default:null', idioma: 'string:255 nullable default:null', timestamps: false }
+    backend\Ciudad: { nombre: 'string:50', pais_id: 'id foreign nullable default:null', timestamps: false, relationships: { BelongsTo: 'Pais:paises' } }
+    backend\Direccion: { numero: 'string:8', calle: 'string:50', codPostal: 'string:6', ciudad_id: 'id:Ciudad foreign nullable default:null', relationships: { BelongsTo: Ciudad } }
+    backend\Entidad: { tipo: 'enum:perfil,cliente,proveedor,cli_pro', razonSocial: 'string:128', nombres: 'string:80', apellidos: 'string:80', activo: 'boolean default:true', eMail: 'string unique', direccion_id: 'id:Direccion foreign nullable default:null', relationships: { belongsToMany: 'Direccion:direcciones', morphedByMany: 'Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex' } }
+    backend\Tabla: { id: false, tabla: bigInteger, tabla_id: bigInteger, nombre: "string:45 charset:'utf8'", descripcion: "string:128 nullable default:null charset:'utf8'", valor1: 'decimal:8,2 nullable default:null', valor2: 'string:128 nullable default:null', valor3: 'boolean nullable default:true', softdeletes: softDeletes }

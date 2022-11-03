@@ -29,13 +29,21 @@ class Perfil extends Model
         'edad' => 'integer',
     ];
 
-    public function user()
-    {
-        return $this->hasOne(\App\Models\User::class);
-    }
+    // public function user()
+    // {
+    //     return $this->hasOne(\App\Models\User::class);
+    // }
 
+    // relacion 1:1 iversa
     public function user()
     {
+        // $user = User::find( $this->user_id);
+        // return $user;
+
+        // otra opcion
+        // return $this->belongsTo('App\Models\User', 'foreign_key', 'local_key');
+
+        // la que más se utiliza
         return $this->belongsTo(\App\Models\User::class);
     }
 }

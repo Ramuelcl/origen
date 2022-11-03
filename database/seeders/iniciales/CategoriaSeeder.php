@@ -2,14 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\backend\Marcador;
+use App\Models\backend\Categoria;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
-use Illuminate\Support\Facades\DB;
-
-class MarcadorSeeder extends Seeder
+class CategoriaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,6 +16,6 @@ class MarcadorSeeder extends Seeder
      */
     public function run()
     {
-        $m = Marcador::factory()->make();
+        Categoria::factory(10)->create();
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\backend\UserSetting;
+use App\Models\backend\Perfil;
 
 // agregamos
 use Illuminate\Support\Str;
@@ -41,6 +42,7 @@ class UserSeeder extends Seeder
                 'is_active' => 1,
             ],
         ];
+
         foreach ($users as $user) {
             $u = User::create($user);
             if ($user['name'] == 'Super Admin') {
@@ -70,12 +72,54 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::factory()
-            // ->has(UserSetting::factory()->count(1), 'userSetting')
-            ->count(48)
-            ->create();
-        // User::factory(48)->create(function ($u) {
-        //     UserSetting::factory(1)->make([$u->id]);
+        // $user = User::factory()
+        //     // ->has(UserSetting::factory()->count(1), 'userSetting')
+        //     ->count(48)
+        //     ->create();
+
+        // factory(App\User::class, 25)->create()->each(function ($user) {
+        //     $user->profile()->save(factory(App\UserProfile::class)->make());
         // });
+        $array1 = ['light', 'dark'];
+        $array2 = ['es-ES', 'fr-FR', 'en-EN'];
+
+        User::factory(48)
+            ->create()
+            ->each(function ($user) {
+                // dump($user);
+                $us = UserSetting::factory()->make();
+                // dd($us->theme);
+                DB::table('user_settings')->insert([
+                    'user_id' => $user->id,
+                    'theme' => $us->theme,
+                    'language' => $us->language,
+                    'autologin' => $us->autologin,
+                ]);
+
+                $p = Perfil::factory()->make();
+                // dump($p);
+                DB::table('perfiles')->insert([
+                    'user_id' => $user->id,
+                    'edad' => $p->edad,
+                    'profesion' => $p->profesion,
+                    'biografia' => $p->biografia,
+                    'website' => $p->website,
+                ]);
+            });
+        // dump($u);
+        // UserSetting::factory()
+        //     ->create()
+        //     ->make([$u->id]);
+        // Perfil::factory()
+        //     ->create()
+        //     ->make([$u->id]);
+
+        // UserSetting::factory(1)->make([$u->id]);
+        // Perfil::factory(1)->make([$u->id]);
+        // foreach ($users as $key => $u) {
+        //     UserSetting::factory(1)->make([$u->id]);
+        //     dd($u);
+        //     Perfil::factory(1)->make([$u->id]);
+        // }
     }
 }

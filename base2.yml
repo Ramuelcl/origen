@@ -1,0 +1,48 @@
+models:
+
+  backend\Pais:
+    nombre: string:50 unique
+    bandera: string:128 nullable default:null
+    idioma: string:5 nullable default:es-Es
+    timestamps: false
+
+  backend\Ciudad:
+    nombre: string:50
+    pais_id: id foreign nullable default:null
+    timestamps: false
+    relationships:
+      BelongsTo: Pais:paises
+
+  backend\Direccion:
+    numero: string:8
+    calle: string:50
+    codPostal: string:6
+    ciudad_id: id:Ciudad foreign nullable default:null
+    relationships:
+      BelongsTo: Ciudad
+
+  backend\Entidad:
+    tipo: enum:perfil,cliente,proveedor,cli_pro
+    razonSocial: string:128
+    nombres: string:80
+    apellidos: string:80
+    activo: boolean default:true
+    eMail: string unique
+    direccion_id: id:Direccion foreign nullable default:null
+    relationships:
+      belongsToMany: Direccion:direcciones
+      morphedByMany: Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex
+
+  backend\Tabla:
+    id: false
+    tabla: bigInteger
+    tabla_id: bigInteger
+    nombre: string:45 charset:'utf8'
+    descripcion: string:128 nullable default:null charset:'utf8'
+    valor1: decimal:8,2 nullable default:null
+    valor2: string:128 nullable default:null
+    valor3: boolean nullable default:true
+    softDeletes: true
+    # indexes:
+      # primary: tabla, tabla_id
+      # index: nombre

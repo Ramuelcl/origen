@@ -9,7 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+//
 use App\Models\backend\UserSetting;
+use App\Models\backend\Perfil;
 // Spatie
 use Spatie\Permission\Traits\HasRoles;
 
@@ -57,5 +59,18 @@ class User extends Authenticatable
     public function userSetting()
     {
         return $this->hasOne(UserSetting::class);
+    }
+
+    // relacion 1:1
+    public function perfil()
+    {
+        // $perfil = Perfil::where('user_id', $this->id)->first();
+        // return $perfil;
+
+        // otra opcion
+        // return $this->hasOne('App\Models\Backend\Perfil', 'foreign_key', 'local_key');
+
+        // la que más se utiliza
+        return $this->hasOne(Perfil::class); //, 'foreign_key', 'local_key'
     }
 }

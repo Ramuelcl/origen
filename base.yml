@@ -1,35 +1,4 @@
 models:
-  # Pais:
-  #   nombre: string:50 unique
-  #   bandera: string:255 nullable default:null
-  #   idioma: string:255 nullable default:null
-  #   timestamps: false
-  # Ciudad:
-  #   nombre: string:50
-  #   pais_id: id foreign nullable default:null
-  #   timestamps: false
-  #   relationships:
-  #     BelongsTo: Pais
-  # Direccion:
-  #   numero: string:8
-  #   calle: string:50
-  #   codPostal: string:6
-  #   ciudad_id: id foreign nullable default:null
-  #   relationships:
-  #     BelongsTo: Ciudad
-  # Entidad:
-  #   tipo: enum:perfil,cliente,proveedor,cli_pro
-  #   nombres: string:80
-  #   apellidos: string:80
-  #   activo: boolean default:true
-  #   eMail: string unique
-  #   direccion_id: id foreign nullable default:null
-  #   relationships:
-  #     BelongsTo: Direccion
-
-    # backend\Profesion:
-  #   nombre: string:45
-  #   slug: string:45
 
   backend\Categoria:
     nombre: string:45 nullable default:null unique
@@ -44,7 +13,7 @@ models:
     edad: unsignedTinyInteger
     profesion: string:30 nullable default:null comment:"despues cambiar a tabla" charset:'utf8'
     biografia: longtext default:null charset:'utf8'
-    website: string:45 default:null charset:'utf8'
+    website: string:128 default:null charset:'utf8'
     softDeletes: true
     relationships:
       hasOne: User
@@ -78,7 +47,7 @@ models:
     actualizado: timestamp nullable useCurrent useCurrentOnUpdate
     softDeletes: true
     relationships:
-      morphToMany: Marcador:marcadorable, Categoria:categoriable
+      morphToMany: Marcador, Categoria
 
   posts\Video:
     name: string:32 charset:'utf8'
@@ -86,7 +55,7 @@ models:
     url: string:128 charset:'utf8'
     softDeletes: true
     relationships:
-      morphToMany: Marcador:marcadorable, Categoria:categoriable
+      morphToMany: Marcador, Categoria
 
   posts\Imagen:
     name: string:32 charset:'utf8'
@@ -94,7 +63,7 @@ models:
     url: string:128 charset:'utf8'
     softDeletes: true
     relationships:
-      morphToMany: Marcador:marcadorable, Categoria:categoriable
+      morphToMany: Marcador, Categoria
 
 
 
