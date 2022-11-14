@@ -31,9 +31,9 @@ class Direccion extends Model
         'ciudad_id' => 'integer',
     ];
 
-    public function ciudad()
+    public function entidades()
     {
-        return $this->belongsTo(Ciudad::class);
+        return $this->belongsTo(Entidad::class);
     }
 
     public function ciudad()

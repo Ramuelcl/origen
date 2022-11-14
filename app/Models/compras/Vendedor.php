@@ -1,20 +1,13 @@
 <?php
 
-namespace App\Models\backend;
+namespace App\Models\compras;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pais extends Model
+class Vendedor extends Model
 {
     use HasFactory;
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -23,8 +16,6 @@ class Pais extends Model
      */
     protected $fillable = [
         'nombre',
-        'bandera',
-        'idioma',
     ];
 
     /**
@@ -35,9 +26,4 @@ class Pais extends Model
     protected $casts = [
         'id' => 'integer',
     ];
-
-    public function ciudades()
-    {
-        return $this->belongsTo(Ciudad::class);
-    }
 }

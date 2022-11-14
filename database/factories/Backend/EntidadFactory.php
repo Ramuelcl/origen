@@ -4,7 +4,6 @@ namespace Database\Factories\backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\backend\Direccion;
 use App\Models\backend\Entidad;
 
 class EntidadFactory extends Factory
@@ -30,7 +29,6 @@ class EntidadFactory extends Factory
             'apellidos' => $this->faker->regexify('[A-Za-z0-9]{80}'),
             'activo' => $this->faker->boolean,
             'eMail' => $this->faker->word,
-            'direccion_id' => Direccion::factory(),
         ];
     }
 }

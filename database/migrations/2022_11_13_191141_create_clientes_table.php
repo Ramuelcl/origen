@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDireccionesTable extends Migration
+class CreateClientesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,10 @@ class CreateDireccionesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('direcciones', function (Blueprint $table) {
-            $table->foreignId('direccion_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('entidad_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+        Schema::create('clientes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();
@@ -30,6 +31,6 @@ class CreateDireccionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('direcciones');
+        Schema::dropIfExists('clientes');
     }
 }

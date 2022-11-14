@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaisTable extends Migration
+class CreateVendedorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreatePaisTable extends Migration
      */
     public function up()
     {
-        Schema::create('pais', function (Blueprint $table) {
+        Schema::disableForeignKeyConstraints();
+
+        Schema::create('vendedors', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 50)->unique();
-            $table->string('bandera', 255)->nullable()->default(null);
-            $table->string('idioma', 255)->nullable()->default(null);
+            $table->string('nombre');
+            $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -28,6 +31,6 @@ class CreatePaisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pais');
+        Schema::dropIfExists('vendedors');
     }
 }

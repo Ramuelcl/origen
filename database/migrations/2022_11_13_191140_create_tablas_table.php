@@ -20,10 +20,13 @@ class CreateTablasTable extends Migration
             $table->bigInteger('tabla_id');
             $table->string('nombre', 45)->charset('utf8');
             $table->string('descripcion', 128)->nullable()->default(null)->charset('utf8');
+            $table->boolean('activo')->nullable()->default(true);
             $table->decimal('valor1', 8, 2)->nullable()->default(null);
             $table->string('valor2', 128)->nullable()->default(null);
-            $table->boolean('valor3')->nullable()->default(true);
+            $table->boolean('valor3')->nullable()->default(false);
             $table->softDeletes();
+            $table->primary(['tabla', 'tabla_id']);
+            $table->index('nombre');
             $table->timestamps();
         });
 

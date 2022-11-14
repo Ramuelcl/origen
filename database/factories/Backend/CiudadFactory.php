@@ -3,9 +3,7 @@
 namespace Database\Factories\backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\backend\Ciudad;
-use App\Models\backend\Pai;
 
 class CiudadFactory extends Factory
 {
@@ -24,8 +22,8 @@ class CiudadFactory extends Factory
     public function definition()
     {
         return [
-            'nombre' => $this->faker->regexify('[A-Za-z0-9]{50}'),
-            'pais_id' => Pai::factory(),
+            // 'nombre' => $ciudad,
+            'pais_id' => 194,
         ];
     }
 }

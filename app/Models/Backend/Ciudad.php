@@ -36,9 +36,9 @@ class Ciudad extends Model
         'pais_id' => 'integer',
     ];
 
-    public function paises()
+    public function direcciones()
     {
-        return $this->belongsTo(Pais::class);
+        return $this->belongsTo(Direccion::class);
     }
 
     public function pais()

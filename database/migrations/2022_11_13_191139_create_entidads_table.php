@@ -23,7 +23,6 @@ class CreateEntidadsTable extends Migration
             $table->string('apellidos', 80);
             $table->boolean('activo')->default(true);
             $table->string('eMail')->unique();
-            $table->foreignId('direccion_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate()->default(null);
             $table->timestamps();
         });
 

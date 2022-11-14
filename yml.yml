@@ -1,0 +1,107 @@
+uno a uno: 1 - 1
+hasOne    > User   -> Perfil (tiene uno)
+belongsTo > Perfil -> User   (pertenece a)
+
+Table:Users
+perfil_id
+
+Model:User
+public function perfil() {
+    return hasOne('App\Models\Perfil', 'perfil_id', 'id');
+}
+
+Model:Perfil
+public function user() {
+    return belongsTo('App\Models\User', 'id', 'perfil_id');
+}
+# ____________________________________
+archivo *.yml:
+  backend\Perfil:
+    id: false
+    user_id: id foreign:users.id primary
+# ====================================
+
+uno a muchos: 1 - n
+hasMany   > Pais -> Ciudad
+belongsTo > Ciudad -> Pais
+
+Model:Pais
+public function ciudades() {
+    return hasMany('App\Models\Ciudad', 'ciudad_id', 'id');
+}
+
+Table:ciudads
+pais_id
+
+Model:Ciudad
+public function pais() {
+    return belongsTo('App\Models\Pais', 'id', 'ciudad_id');
+}
+
+# ____________________________________
+archivo *.yml:
+  backend\Ciudad:
+    nombre: string:50
+    pais_id: id foreign nullable default:null
+  backend\Pais:
+    nombre: string:50 unique
+    relationships:
+      BelongsTo: Ciudad:ciudads
+
+# ====================================
+uno a muchos: 1 - n
+hasMany   > Categoria -> Post
+belongsTo > Post -> Categoria
+
+Model:Categoria
+public function posts() {
+    return hasMany('App\Models\Post', 'categoria_id', 'id');
+}
+
+Table:posts
+categoria_id
+
+Model:Post
+public function categoria() {
+    return belongTo('App\Models\Categoria', 'id', 'categoria_id');
+}
+
+# ____________________________________
+archivo *.yml:
+  backend\Categoria:
+    relationships:
+      BelongsTo: Post:posts
+  post\Post:
+    categoria_id: id foreign nullable default:null
+# ====================================
+
+muchos a muchos: n - n
+belongsToMany > User -> Roles
+belongsToMany > Roles -> User
+
+tabla pivote: user_roles
+user_id
+rol_id
+
+Model:User
+public function roles() {
+    return belongsToMany('App\Models\Rol');
+}
+
+Model:Rol
+public function users() {
+    return belongsToMany('App\Models\User');
+}
+# ____________________________________
+# creada automáticamente
+# tabla pivote: user_roles
+# user_id
+# rol_id
+archivo *.yml:
+  User:
+    relationships:
+      belongsToMany: Rol:user_roles
+  Rol:
+    relationships:
+      belongsToMany: User:user_roles
+# ====================================

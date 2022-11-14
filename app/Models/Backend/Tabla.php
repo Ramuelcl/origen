@@ -20,6 +20,7 @@ class Tabla extends Model
         'tabla_id',
         'nombre',
         'descripcion',
+        'activo',
         'valor1',
         'valor2',
         'valor3',
@@ -33,6 +34,7 @@ class Tabla extends Model
     protected $casts = [
         'tabla' => 'integer',
         'tabla_id' => 'integer',
+        'activo' => 'boolean',
         'valor1' => 'decimal:2',
         'valor3' => 'boolean',
     ];

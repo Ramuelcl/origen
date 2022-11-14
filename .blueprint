@@ -4,18 +4,23 @@ created:
     - database/factories/backend/DireccionFactory.php
     - database/factories/backend/EntidadFactory.php
     - database/factories/backend/TablaFactory.php
-    - database/migrations/2022_11_03_135321_create_pais_table.php
-    - database/migrations/2022_11_03_135322_create_ciudads_table.php
-    - database/migrations/2022_11_03_135323_create_direccions_table.php
-    - database/migrations/2022_11_03_135324_create_entidads_table.php
-    - database/migrations/2022_11_03_135325_create_tablas_table.php
-    - database/migrations/2022_11_03_135326_create_direcciones_table.php
-    - database/migrations/2022_11_03_135327_create_entidadables_table.php
+    - database/factories/ventas/ClienteFactory.php
+    - database/factories/compras/VendedorFactory.php
+    - database/migrations/2022_11_13_191136_create_pais_table.php
+    - database/migrations/2022_11_13_191137_create_ciudads_table.php
+    - database/migrations/2022_11_13_191138_create_direccions_table.php
+    - database/migrations/2022_11_13_191139_create_entidads_table.php
+    - database/migrations/2022_11_13_191140_create_tablas_table.php
+    - database/migrations/2022_11_13_191141_create_clientes_table.php
+    - database/migrations/2022_11_13_191142_create_vendedors_table.php
+    - database/migrations/2022_11_13_191143_create_entidadables_table.php
     - app/Models/backend/Pais.php
     - app/Models/backend/Ciudad.php
     - app/Models/backend/Direccion.php
     - app/Models/backend/Entidad.php
     - app/Models/backend/Tabla.php
+    - app/Models/ventas/Cliente.php
+    - app/Models/compras/Vendedor.php
 models:
     backend\Categoria: { nombre: 'string:45 nullable', slug: 'string:45 nullable' }
     backend\Marcador: { nombre: 'string:45 nullable', slug: 'string:45 nullable', hexa: 'string:7 default:#', imagen: 'string:128 nullable', rgb: 'string:20 nullable', metadata: 'json nullable' }
@@ -25,8 +30,10 @@ models:
     posts\Imagen: { name: 'string:32', user_id: 'biginteger unsigned', url: 'string:128' }
     posts\Post: { user_id: 'biginteger unsigned', name: 'string:32', contenido: 'text nullable', publicado: 'datetime nullable default:CURRENT_TIMESTAMP', actualizado: 'datetime nullable default:CURRENT_TIMESTAMP' }
     posts\Video: { name: 'string:32', user_id: 'biginteger unsigned', url: 'string:128' }
-    backend\Pais: { nombre: 'string:50 unique', bandera: 'string:255 nullable default:null', idioma: 'string:255 nullable default:null', timestamps: false }
-    backend\Ciudad: { nombre: 'string:50', pais_id: 'id foreign nullable default:null', timestamps: false, relationships: { BelongsTo: 'Pais:paises' } }
-    backend\Direccion: { numero: 'string:8', calle: 'string:50', codPostal: 'string:6', ciudad_id: 'id:Ciudad foreign nullable default:null', relationships: { BelongsTo: Ciudad } }
-    backend\Entidad: { tipo: 'enum:perfil,cliente,proveedor,cli_pro', razonSocial: 'string:128', nombres: 'string:80', apellidos: 'string:80', activo: 'boolean default:true', eMail: 'string unique', direccion_id: 'id:Direccion foreign nullable default:null', relationships: { belongsToMany: 'Direccion:direcciones', morphedByMany: 'Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex' } }
-    backend\Tabla: { id: false, tabla: bigInteger, tabla_id: bigInteger, nombre: "string:45 charset:'utf8'", descripcion: "string:128 nullable default:null charset:'utf8'", valor1: 'decimal:8,2 nullable default:null', valor2: 'string:128 nullable default:null', valor3: 'boolean nullable default:true', softdeletes: softDeletes }
+    backend\Pais: { nombre: 'string:50 unique', bandera: 'string:128 nullable default:null', idioma: 'string:5 nullable default:null', timestamps: false, relationships: { BelongsTo: 'Ciudad:ciudades' } }
+    backend\Ciudad: { nombre: 'string:50', pais_id: 'id foreign nullable default:null', timestamps: false, relationships: { BelongsTo: 'Direccion:direcciones' } }
+    backend\Direccion: { numero: 'string:8', calle: 'string:50', codPostal: 'string:6', ciudad_id: 'id:Ciudad foreign nullable default:null', relationships: { BelongsTo: 'Entidad:entidades' } }
+    backend\Entidad: { tipo: 'enum:perfil,cliente,proveedor,cli_pro', razonSocial: 'string:128', nombres: 'string:80', apellidos: 'string:80', activo: 'boolean default:true', eMail: 'string unique', relationships: { hasMany: 'Direccion:direcciones', morphedByMany: 'Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex' } }
+    backend\Tabla: { id: false, tabla: bigInteger, tabla_id: bigInteger, nombre: "string:45 charset:'utf8'", descripcion: "string:128 nullable default:null charset:'utf8'", activo: 'boolean nullable default:true', valor1: 'decimal:8,2 nullable default:null', valor2: 'string:128 nullable default:null', valor3: 'boolean nullable default:false', indexes: [{ primary: 'tabla, tabla_id' }, { index: nombre }], softdeletes: softDeletes }
+    ventas\Cliente: { nombre: string }
+    compras\Vendedor: { nombre: string }

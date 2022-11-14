@@ -16,8 +16,8 @@ class CreatePaisTable extends Migration
         Schema::create('pais', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 50)->unique();
-            $table->string('bandera', 255)->nullable()->default(null);
-            $table->string('idioma', 255)->nullable()->default(null);
+            $table->string('bandera', 128)->nullable()->default(null);
+            $table->string('idioma', 5)->nullable()->default(null);
         });
     }
 

@@ -21,7 +21,6 @@ class Entidad extends Model
         'apellidos',
         'activo',
         'eMail',
-        'direccion_id',
     ];
 
     /**
@@ -32,31 +31,25 @@ class Entidad extends Model
     protected $casts = [
         'id' => 'integer',
         'activo' => 'boolean',
-        'direccion_id' => 'integer',
     ];
 
-    public function direccions()
+    public function direcciones()
     {
-        return $this->belongsToMany(Direccion::class, 'direcciones');
+        return $this->hasMany(Direccion::class);
     }
 
     public function clienteIndices()
     {
-        return $this->morphedByMany(Cliente::class, 'entidadable');
+        return $this->morphedByMany(\App\Models\ventas\Cliente::class, 'entidadable');
     }
 
     public function vendedorIndices()
     {
-        return $this->morphedByMany(Vendedor::class, 'entidadable');
+        return $this->morphedByMany(\App\Models\compras\Vendedor::class, 'entidadable');
     }
 
     public function perfilIndices()
     {
         return $this->morphedByMany(Perfil::class, 'entidadable');
-    }
-
-    public function direccion()
-    {
-        return $this->belongsTo(Direccion::class);
     }
 }

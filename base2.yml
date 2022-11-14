@@ -1,17 +1,19 @@
+# ==== base2.yml ======================================
 models:
-
   backend\Pais:
     nombre: string:50 unique
     bandera: string:128 nullable default:null
-    idioma: string:5 nullable default:es-Es
+    idioma: string:5 nullable default:null
     timestamps: false
+    relationships:
+      BelongsTo: Ciudad:ciudades
 
   backend\Ciudad:
     nombre: string:50
     pais_id: id foreign nullable default:null
     timestamps: false
     relationships:
-      BelongsTo: Pais:paises
+      BelongsTo: Direccion:direcciones
 
   backend\Direccion:
     numero: string:8
@@ -19,7 +21,7 @@ models:
     codPostal: string:6
     ciudad_id: id:Ciudad foreign nullable default:null
     relationships:
-      BelongsTo: Ciudad
+      BelongsTo: Entidad:entidades
 
   backend\Entidad:
     tipo: enum:perfil,cliente,proveedor,cli_pro
@@ -28,9 +30,8 @@ models:
     apellidos: string:80
     activo: boolean default:true
     eMail: string unique
-    direccion_id: id:Direccion foreign nullable default:null
     relationships:
-      belongsToMany: Direccion:direcciones
+      hasMany: Direccion:direcciones
       morphedByMany: Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex
 
   backend\Tabla:
@@ -39,10 +40,19 @@ models:
     tabla_id: bigInteger
     nombre: string:45 charset:'utf8'
     descripcion: string:128 nullable default:null charset:'utf8'
+    activo: boolean nullable default:true
     valor1: decimal:8,2 nullable default:null
     valor2: string:128 nullable default:null
-    valor3: boolean nullable default:true
+    valor3: boolean nullable default:false
+    indexes:
+      - primary: tabla, tabla_id
+      - index: nombre
     softDeletes: true
-    # indexes:
-      # primary: tabla, tabla_id
-      # index: nombre
+
+  ventas\Cliente:
+    nombre: string
+
+  compras\Vendedor:
+    nombre: string
+
+seeder: Pais, Ciudad, Direccion, Entidad, Tabla

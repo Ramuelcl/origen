@@ -1,19 +1,19 @@
 <?php
 
-namespace Database\Factories\backend;
+namespace Database\Factories\compras;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\backend\Tabla;
+use App\Models\compras\Vendedor;
 
-class TablaFactory extends Factory
+class VendedorFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Tabla::class;
+    protected $model = Vendedor::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,7 @@ class TablaFactory extends Factory
     public function definition()
     {
         return [
-            'descripcion' => $this->faker->words(
-                $nb = \rand($min=2, $max=4), $asText = true),
+            'nombre' => $this->faker->word,
         ];
     }
 }
