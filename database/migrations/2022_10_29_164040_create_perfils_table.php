@@ -25,12 +25,7 @@ class CreatePerfilsTable extends Migration
                 ->cascadeOnUpdate()
                 ->primary();
             $table->unsignedTinyInteger('edad');
-            $table
-                ->string('profesion', 30)
-                ->nullable()
-                ->default(null)
-                ->comment('despues cambiar a tabla')
-                ->charset('utf8');
+            $table->unsignedTinyInteger('id_profesion')->nullable()->default(null);
             $table
                 ->longText('biografia')
                 ->default(null)

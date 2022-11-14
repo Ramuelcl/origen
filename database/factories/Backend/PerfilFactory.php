@@ -3,8 +3,6 @@
 namespace Database\Factories\backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use App\Models\User;
 use App\Models\backend\Perfil;
 
 class PerfilFactory extends Factory
@@ -25,13 +23,14 @@ class PerfilFactory extends Factory
     {
         $edad = $this->faker->numberBetween($min = 18, $max = 65);
         //randomNumber($nbDigits = 2, $strict = false),
-        $profesion = ucwords($this->faker->words($this->faker->numberBetween(1, 2), $string = true));
+        $p = new Perfil;
+        $profesion = $p->profesion_rnd();
         $biografia = ucwords($this->faker->words($this->faker->numberBetween(10, 93), $string = true));
-
+// dd($profesion);
         return [
             // 'user_id' => $this->id,
             'edad' => $edad,
-            'profesion' => $profesion,
+            'id_profesion' =>  $profesion[0],
             'biografia' => $biografia,
             'website' => $this->faker->url(),
         ];

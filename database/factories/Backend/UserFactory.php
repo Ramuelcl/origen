@@ -2,11 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Team;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Jetstream\Features;
+use App\Models\Team;
+
+use App\Models\User;
 
 class UserFactory extends Factory
 {
@@ -24,11 +27,54 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $name=$this->faker->lastName();
+        $prename=$this->faker->unique()->firstName();
+
+        $i = $this->faker->numberBetween($min = 0, $max = 6);
+        if ($i==0) {
+            $email="$name$prename";
+        } elseif ($i==1) {
+            $email="$prename.$name";
+        } elseif ($i==2) {
+            $email="$name.$prename";
+        } elseif ($i==3) {
+            $email="$prename$name";
+        } elseif ($i==4) {
+            $email=$name.'_'.$prename;
+        } elseif ($i==5) {
+            $email=$prename.'_'.$name;
+        } else {
+            $email=$this->faker->userName();
+        }
+        $email = \limpiar_caracteres($email);
+
+        // $path=public_path('avatars');
+        // $path2=storage_path();
+        // $path2=public_path().'\\images\\';
+        // $avatar= $this->faker->image($path, 640, 480, null, false);
+        // $avatar1= $this->faker->imageUrl(640, 480, null, false);
+
+        // $avatar= $this->faker->image(
+        //     $dir = $folder,
+        //     $width = 640,
+        //     $height = 480,
+        //     $category=$this->getIniciales($prename.' '.$name), /* usado como texto sobre la imagen,default null */
+        //     $fullPath=true,
+        //     $randomize=true,// it's a no randomize images (default: `true`)
+        //     $word=null, //it's a filename without path
+        //     $gray=false,
+        //     $format='png'
+        // );
+        // dd($avatar, $avatar1, public_path('avatars'));
+        // echo($avatar);
+        // TODO: registrar foto en directorio, no se queda, se borra sola inmediatamente
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => $name ." ". $prename,
+            // 'prename' => $prename,
+            'email' => $email.'@'.$this->faker->freeEmailDomain(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            // 'profile_photo_path'=>$avatar1,
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }
@@ -54,24 +100,16 @@ class UserFactory extends Factory
      */
     public function withPersonalTeam()
     {
-        if (!Features::hasTeamFeatures()) {
+        if (! Features::hasTeamFeatures()) {
             return $this->state([]);
         }
 
         return $this->has(
-            Team::factory()->state(function (array $attributes, User $user) {
-                return ['name' => $user->name . '\'s Team', 'user_id' => $user->id, 'personal_team' => true];
-            }),
-            'ownedTeams',
+            Team::factory()
+                ->state(function (array $attributes, User $user) {
+                    return ['name' => $user->name.'\'s Team', 'user_id' => $user->id, 'personal_team' => true];
+                }),
+            'ownedTeams'
         );
     }
-
-    // public function configure()
-    // {
-    //     return $this->afterMaking(function (User $user) {
-    //         //
-    //     })->afterCreating(function (User $user) {
-    //         //
-    //     });
-    // }
 }

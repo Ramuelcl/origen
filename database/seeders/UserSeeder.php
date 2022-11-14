@@ -53,11 +53,12 @@ class UserSeeder extends Seeder
                 $theme = 'light';
                 $language = 'es-ES';
             } else {
+                $u->assignRole('user');
                 $theme = 'dark';
                 $language = 'fr-FR';
             }
             //guardar un registro de configuracion para el usuario
-            $s = DB::table('user_settings')->insert([
+            UserSetting::create([
                 'user_id' => $u['id'],
                 'theme' => $theme,
                 'language' => $language,
@@ -87,25 +88,14 @@ class UserSeeder extends Seeder
             ->create()
             ->each(function ($user) {
                 // dump($user);
-                $us = UserSetting::factory()->make();
-                // dd($us->theme);
-                DB::table('user_settings')->insert([
+                UserSetting::factory()->create([
                     'user_id' => $user->id,
-                    'theme' => $us->theme,
-                    'language' => $us->language,
-                    'autologin' => $us->autologin,
                 ]);
-
-                $p = Perfil::factory()->make();
-                // dump($p);
-                DB::table('perfiles')->insert([
+                Perfil::factory()->create([
                     'user_id' => $user->id,
-                    'edad' => $p->edad,
-                    'profesion' => $p->profesion,
-                    'biografia' => $p->biografia,
-                    'website' => $p->website,
                 ]);
             });
+
         // dump($u);
         // UserSetting::factory()
         //     ->create()

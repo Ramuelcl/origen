@@ -11,7 +11,7 @@ models:
     id: false
     user_id: id foreign:users.id primary
     edad: unsignedTinyInteger
-    profesion: string:30 nullable default:null comment:"despues cambiar a tabla" charset:'utf8'
+    id_profesion: unsignedTinyInteger nullable default:null
     biografia: longtext default:null charset:'utf8'
     website: string:128 default:null charset:'utf8'
     softDeletes: true

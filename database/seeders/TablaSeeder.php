@@ -27,7 +27,7 @@ class TablaSeeder extends Seeder
 
         $m = 0;
         foreach($tabla['Menu'] as $i => $menu1){
-dump(['i'=>$i, 'menu'=>$menu1]);
+// dump(['i'=>$i, 'menu'=>$menu1]);
             if($i == 0){
                 Tabla::factory(1)->create([
                     'tabla'=>1000,
