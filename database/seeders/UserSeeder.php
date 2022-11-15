@@ -95,21 +95,5 @@ class UserSeeder extends Seeder
                     'user_id' => $user->id,
                 ]);
             });
-
-        // dump($u);
-        // UserSetting::factory()
-        //     ->create()
-        //     ->make([$u->id]);
-        // Perfil::factory()
-        //     ->create()
-        //     ->make([$u->id]);
-
-        // UserSetting::factory(1)->make([$u->id]);
-        // Perfil::factory(1)->make([$u->id]);
-        // foreach ($users as $key => $u) {
-        //     UserSetting::factory(1)->make([$u->id]);
-        //     dd($u);
-        //     Perfil::factory(1)->make([$u->id]);
-        // }
     }
 }

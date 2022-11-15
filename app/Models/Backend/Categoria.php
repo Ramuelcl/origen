@@ -17,7 +17,7 @@ class Categoria extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'slug'];
+    protected $fillable = ['nombre', 'babosa'];
 
     /**
      * The attributes that should be cast to native types.

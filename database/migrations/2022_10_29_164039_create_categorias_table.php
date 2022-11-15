@@ -23,7 +23,7 @@ class CreateCategoriasTable extends Migration
                 ->default(null)
                 ->unique();
             $table
-                ->string('slug', 45)
+                ->string('babosa', 45)
                 ->nullable()
                 ->default(null)
                 ->charset('utf8');

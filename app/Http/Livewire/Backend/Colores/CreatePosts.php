@@ -14,7 +14,7 @@ class CreatePosts extends Component
     // variables de la aplicacion
     public $open = false;
     // variables de campo del formulario
-    public $nombre, $slug, $hexa, $rgb, $metadata, $imagen;
+    public $nombre, $babosa, $hexa, $rgb, $metadata, $imagen;
 
     // status: true=formulario crear; false=formulario editar
     public $status = null;
@@ -87,7 +87,7 @@ class CreatePosts extends Component
 
         Color::updateOrCreate([
             'nombre' => $this->nombre,
-            'slug' => Str::slug($this->nombre),
+            'babosa' => Str::slug($this->nombre),
             'hexa' => $this->hexa,
             'rgb' => $rgb,
             'metadata' => $metadata,
@@ -105,7 +105,7 @@ class CreatePosts extends Component
         $this->reset(['open']);
         $this->idImagen = rand();
         // variables de los datos
-        $this->reset(['nombre', 'slug', 'hexa', 'rgb', 'metadata', 'imagen']);
+        $this->reset(['nombre', 'babosa', 'hexa', 'rgb', 'metadata', 'imagen']);
         // $this->reset('data');
         // Will only reset the data property.
 

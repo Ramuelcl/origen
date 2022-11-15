@@ -18,7 +18,7 @@ protected $table='marcadores';
      */
     protected $fillable = [
         'nombre',
-        'slug',
+        'babosa',
         'hexa',
         'imagen',
         'rgb',

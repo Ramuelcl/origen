@@ -21,7 +21,7 @@ class ShowPosts extends Component
         $checaUno = false,
         $_id = 0,
         $nombre,
-        $slug,
+        $babosa,
         $hexa,
         $rgb;
     public $orden = 'id';

@@ -17,7 +17,7 @@ class Marcador extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'slug', 'hexa', 'imagen', 'rgb', 'metadata'];
+    protected $fillable = ['nombre', 'babosa', 'hexa', 'imagen', 'rgb', 'metadata'];
 
     /**
      * The attributes that should be cast to native types.

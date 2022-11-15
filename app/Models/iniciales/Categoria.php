@@ -17,7 +17,7 @@ protected $table='categorias';
      */
     protected $fillable = [
         'nombre',
-        'slug',
+        'babosa',
     ];
 
     /**

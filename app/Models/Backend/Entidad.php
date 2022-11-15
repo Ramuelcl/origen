@@ -38,6 +38,11 @@ class Entidad extends Model
         return $this->hasMany(Direccion::class);
     }
 
+    public function telefonos()
+    {
+        return $this->hasMany(Telefono::class);
+    }
+
     public function clienteIndices()
     {
         return $this->morphedByMany(\App\Models\ventas\Cliente::class, 'entidadable');

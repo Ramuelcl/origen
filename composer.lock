@@ -2447,7 +2447,7 @@
                 "nette",
                 "paginator",
                 "password",
-                "slugify",
+                "babosaify",
                 "string",
                 "unicode",
                 "utf-8",

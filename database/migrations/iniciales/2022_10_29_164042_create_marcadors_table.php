@@ -26,7 +26,7 @@ class CreateMarcadorsTable extends Migration
                 ->unique()
                 ->charset('utf8');
             $table
-                ->string('slug', 45)
+                ->string('babosa', 45)
                 ->nullable()
                 ->default(null)
                 ->charset('utf8');

@@ -23,6 +23,12 @@ models:
     relationships:
       BelongsTo: Entidad:entidades
 
+  backend\Telefono:
+    tipo: unsignedTinyInteger:2
+    numero: string:13
+    relationships:
+      BelongsTo: Entidad:entidades
+
   backend\Entidad:
     tipo: enum:perfil,cliente,proveedor,cli_pro
     razonSocial: string:128
@@ -31,7 +37,7 @@ models:
     activo: boolean default:true
     eMail: string unique
     relationships:
-      hasMany: Direccion:direcciones
+      hasMany: Direccion:direcciones, Telefono:telefonos
       morphedByMany: Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex
 
   backend\Tabla:
@@ -55,4 +61,4 @@ models:
   compras\Vendedor:
     nombre: string
 
-seeder: Pais, Ciudad, Direccion, Entidad, Tabla
+# seeder: Pais, Ciudad, Direccion, Entidad, Tabla
