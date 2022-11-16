@@ -4,16 +4,16 @@ namespace Database\Factories\backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\backend\Telefono;
+use App\Models\backend\Tabla;
 
-class TelefonoFactory extends Factory
+class TablaFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Telefono::class;
+    protected $model = Tabla::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,8 @@ class TelefonoFactory extends Factory
     public function definition()
     {
         return [
-            'tipo' => $this->faker->randomDigitNotNull,
-            'numero' => $this->faker->regexify('[0-9]{13}'),
+            'descripcion' => $this->faker->words(
+                $nb = \rand($min=2, $max=4), $asText = true),
         ];
     }
 }

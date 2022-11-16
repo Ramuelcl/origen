@@ -25,7 +25,7 @@ class CategoriaFactory extends Factory
         $nombre = ucwords($this->faker->words($this->faker->numberBetween(1, 3), $string = true));
         return [
             'nombre' => $nombre,
-            'babosa' => Str::babosa($nombre),
+            'babosa' => Str::slug($nombre),
         ];
     }
 }

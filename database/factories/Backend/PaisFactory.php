@@ -27,8 +27,7 @@ class PaisFactory extends Factory
         // dd($paises);
 
         foreach ($paises as  $value) {
-            // dump([$value, $value['name']]);
-            // dump([$value['filename'], $value['name']]);
+            // dump([$value, $value['filename'], $value['name']]);
 
             DB::table('pais')->insert([
                 'nombre' => $value['name'],

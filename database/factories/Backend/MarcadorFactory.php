@@ -41,7 +41,7 @@ class MarcadorFactory extends Factory
             // $v = $colores[$this->i];
 
             $nombre = Str::title($v['name']);
-            $babosa = Str::babosa($v['name']);
+            $babosa = Str::slug($v['name']);
             $hexa = '#' . $v['hexa'];
             $rgb = $v['rgb'];
             $metadata = json_encode([$nombre, $hexa, $rgb]);

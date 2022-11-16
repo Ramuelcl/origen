@@ -7,15 +7,16 @@ created:
     - database/factories/backend/TablaFactory.php
     - database/factories/ventas/ClienteFactory.php
     - database/factories/compras/VendedorFactory.php
-    - database/migrations/2022_11_14_203754_create_pais_table.php
-    - database/migrations/2022_11_14_203755_create_ciudads_table.php
-    - database/migrations/2022_11_14_203756_create_direccions_table.php
-    - database/migrations/2022_11_14_203757_create_telefonos_table.php
-    - database/migrations/2022_11_14_203758_create_entidads_table.php
-    - database/migrations/2022_11_14_203759_create_tablas_table.php
-    - database/migrations/2022_11_14_203800_create_clientes_table.php
-    - database/migrations/2022_11_14_203801_create_vendedors_table.php
-    - database/migrations/2022_11_14_203802_create_entidadables_table.php
+    - database/migrations/2022_11_15_223302_create_pais_table.php
+    - database/migrations/2022_11_15_223303_create_ciudads_table.php
+    - database/migrations/2022_11_15_223304_create_direccions_table.php
+    - database/migrations/2022_11_15_223305_create_telefonos_table.php
+    - database/migrations/2022_11_15_223306_create_entidads_table.php
+    - database/migrations/2022_11_15_223307_create_tablas_table.php
+    - database/migrations/2022_11_15_223308_create_clientes_table.php
+    - database/migrations/2022_11_15_223309_create_vendedors_table.php
+    - database/migrations/2022_11_15_223310_create_entidades_table.php
+    - database/migrations/2022_11_15_223311_create_entidadables_table.php
     - app/Models/backend/Pais.php
     - app/Models/backend/Ciudad.php
     - app/Models/backend/Direccion.php
@@ -25,8 +26,8 @@ created:
     - app/Models/ventas/Cliente.php
     - app/Models/compras/Vendedor.php
 models:
-    backend\Categoria: { nombre: 'string:45 nullable', slug: 'string:45 nullable' }
-    backend\Marcador: { nombre: 'string:45 nullable', slug: 'string:45 nullable', hexa: 'string:7 default:#', imagen: 'string:128 nullable', rgb: 'string:20 nullable', metadata: 'json nullable' }
+    backend\Categoria: { nombre: 'string:45 nullable', babosa: 'string:45 nullable' }
+    backend\Marcador: { nombre: 'string:45 nullable', babosa: 'string:45 nullable', hexa: 'string:7 default:#', imagen: 'string:128 nullable', rgb: 'string:20 nullable', metadata: 'json nullable' }
     backend\Perfil: { user_id: 'biginteger unsigned', edad: 'boolean unsigned', id_profesion: 'boolean unsigned nullable', biografia: text, website: 'string:128' }
     backend\UserSetting: { user_id: 'biginteger unsigned', theme: 'string:20 default:dark', language: 'string:5 default:fr-FR', autologin: 'boolean default:1' }
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, two_factor_secret: 'text nullable', two_factor_recovery_codes: 'text nullable', two_factor_confirmed_at: 'datetime nullable', is_active: 'boolean default:1', remember_token: 'string:100 nullable', current_team_id: 'biginteger unsigned nullable', profile_photo_path: 'string:2048 nullable' }
@@ -36,7 +37,7 @@ models:
     backend\Pais: { nombre: 'string:50 unique', bandera: 'string:128 nullable default:null', idioma: 'string:5 nullable default:null', timestamps: false, relationships: { BelongsTo: 'Ciudad:ciudades' } }
     backend\Ciudad: { nombre: 'string:50', pais_id: 'id foreign nullable default:null', timestamps: false, relationships: { BelongsTo: 'Direccion:direcciones' } }
     backend\Direccion: { numero: 'string:8', calle: 'string:50', codPostal: 'string:6', ciudad_id: 'id:Ciudad foreign nullable default:null', relationships: { BelongsTo: 'Entidad:entidades' } }
-    backend\Telefono: { tipo: 'unsignedTinyInteger:2', numero: 'string:13', relationships: { BelongsTo: 'Entidad:entidades' } }
+    backend\Telefono: { tipo: 'string:2', numero: 'string:13', relationships: { BelongsToMany: 'Entidad:entidades' } }
     backend\Entidad: { tipo: 'enum:perfil,cliente,proveedor,cli_pro', razonSocial: 'string:128', nombres: 'string:80', apellidos: 'string:80', activo: 'boolean default:true', eMail: 'string unique', relationships: { hasMany: 'Direccion:direcciones, Telefono:telefonos', morphedByMany: 'Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex' } }
     backend\Tabla: { id: false, tabla: bigInteger, tabla_id: bigInteger, nombre: "string:45 charset:'utf8'", descripcion: "string:128 nullable default:null charset:'utf8'", activo: 'boolean nullable default:true', valor1: 'decimal:8,2 nullable default:null', valor2: 'string:128 nullable default:null', valor3: 'boolean nullable default:false', indexes: [{ primary: 'tabla, tabla_id' }, { index: nombre }], softdeletes: softDeletes }
     ventas\Cliente: { nombre: string }

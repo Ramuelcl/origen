@@ -3,17 +3,16 @@
 namespace Database\Factories\backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use App\Models\backend\Telefono;
+use App\Models\backend\Ciudad;
 
-class TelefonoFactory extends Factory
+class CiudadFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Telefono::class;
+    protected $model = Ciudad::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +22,8 @@ class TelefonoFactory extends Factory
     public function definition()
     {
         return [
-            'tipo' => $this->faker->randomDigitNotNull,
-            'numero' => $this->faker->regexify('[0-9]{13}'),
+            // 'nombre' => $ciudad,
+            'pais_id' => 194,
         ];
     }
 }

@@ -36,14 +36,12 @@ class DireccionFactory extends Factory
         $pos= strpos($myString = $dirs[1], $findMy = ', ');
         $codPostal = sprintf("%05d", (int)filter_var(substr($dirs[1], $pos+2), FILTER_SANITIZE_NUMBER_INT));
         $ciudad = substr($dirs[1], 0, $pos);
-        $ciudad = Ciudad::factory()->create(['nombre' => $ciudad]);
         // dd([$dirs, $numero,$calle,$codPostal,$ciudad_id]);
-        // dump($ciudad->id);
         return [
             'numero' => $numero,
             'calle' => $calle,
             'codPostal' => $codPostal,
-            'ciudad_id' => $ciudad->id,
+            'ciudad_id' => Ciudad::factory()->create(['nombre' => $ciudad]),
         ];
     }
 }

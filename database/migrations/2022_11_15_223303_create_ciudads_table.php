@@ -17,7 +17,7 @@ class CreateCiudadsTable extends Migration
 
         Schema::create('ciudads', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 50);
+            $table->string('nombre', 50)->nullable()->default(null);
             $table->foreignId('pais_id')->nullable()->constrained('pais')->cascadeOnDelete()->cascadeOnUpdate()->default(null);
         });
 

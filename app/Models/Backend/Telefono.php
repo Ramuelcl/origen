@@ -26,11 +26,10 @@ class Telefono extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'tipo' => 'integer',
     ];
 
-    public function entidades()
+    public function entidads()
     {
-        return $this->belongsTo(Entidad::class);
+        return $this->belongsToMany(Entidad::class, 'entidades');
     }
 }

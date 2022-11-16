@@ -9,7 +9,7 @@ models:
       BelongsTo: Ciudad:ciudades
 
   backend\Ciudad:
-    nombre: string:50
+    nombre: string:50 nullable default:null
     pais_id: id foreign nullable default:null
     timestamps: false
     relationships:
@@ -24,10 +24,10 @@ models:
       BelongsTo: Entidad:entidades
 
   backend\Telefono:
-    tipo: unsignedTinyInteger:2
+    tipo: string:2
     numero: string:13
     relationships:
-      BelongsTo: Entidad:entidades
+      BelongsToMany: Entidad:entidades
 
   backend\Entidad:
     tipo: enum:perfil,cliente,proveedor,cli_pro

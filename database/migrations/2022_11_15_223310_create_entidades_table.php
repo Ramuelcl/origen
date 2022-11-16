@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTelefonosTable extends Migration
+class CreateEntidadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +15,9 @@ class CreateTelefonosTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('telefonos', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedTinyInteger('tipo', 2);
-            $table->string('numero', 13);
-            $table->timestamps();
+        Schema::create('entidades', function (Blueprint $table) {
+            $table->foreignId('entidad_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('telefono_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
         });
 
         Schema::enableForeignKeyConstraints();
@@ -32,6 +30,6 @@ class CreateTelefonosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('telefonos');
+        Schema::dropIfExists('entidades');
     }
 }

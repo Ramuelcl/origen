@@ -41,7 +41,7 @@ class MarcadorFactory extends Factory
             // $v = $colores[$this->i];
 
             $nombre = Str::title($v['name']);
-            $babosa = Str::babosa($v['name']);
+            $babosa = Str::slug($v['name']);
             $hexa = '#' . $v['hexa'];
             $rgb = $v['rgb'];
             $metadata = json_encode([$nombre, $hexa, $rgb]);
@@ -54,9 +54,9 @@ class MarcadorFactory extends Factory
 
             // Storage::put('images', $imagen);
 
-//            $sql = "INSERT INTO marcadores (`nombre`,`babosa`,`hexa`,`rgb`,`metadata`,`imagen`) VALUES (
-//                '$nombre', '$babosa', '$hexa', '$rgb', '$metadata', '$imagen'
-//            );";
+            //            $sql = "INSERT INTO marcadores (`nombre`,`babosa`,`hexa`,`rgb`,`metadata`,`imagen`) VALUES (
+            //                '$nombre', '$babosa', '$hexa', '$rgb', '$metadata', '$imagen'
+            //            );";
             $sql = "INSERT INTO marcadores (`nombre`,`babosa`,`hexa`,`rgb`,`metadata`) VALUES (
                 '$nombre', '$babosa', '$hexa', '$rgb', '$metadata');";
 
