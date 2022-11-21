@@ -1,0 +1,64 @@
+# ==== base2.yml ======================================
+models:
+  ventas\Articulos:
+    nombre: string:50 unique
+    babosa: string:50 nullable default:null
+    user_id: id foreign nullable default:null
+    cantidad: decimal:8,2
+    activo: boolean default:true
+    estado: integer:2
+    relationships:
+      BelongsTo: Documento:documentos
+
+  ventas\Cliente:
+    nombre: string:50 nullable default:null
+    relationships:
+      BelongsTo: Direccion:direcciones
+
+  ventas\Detalle:
+    numero: string:8
+    calle: string:50
+    codPostal: string:6
+    ciudad_id: id:Ciudad foreign nullable default:null
+    relationships:
+      BelongsTo: Entidad:entidades
+
+  backend\Telefono:
+    tipo: string:2
+    numero: string:13
+    relationships:
+      BelongsToMany: Entidad:entidades
+
+  backend\Entidad:
+    tipo: enum:perfil,cliente,proveedor,cli_pro
+    razonSocial: string:128
+    nombres: string:80
+    apellidos: string:80
+    activo: boolean default:true
+    eMail: string unique
+    relationships:
+      hasMany: Direccion:direcciones, Telefono:telefonos
+      morphedByMany: Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex
+
+  backend\Tabla:
+    id: false
+    tabla: bigInteger
+    tabla_id: bigInteger
+    nombre: string:45 charset:'utf8'
+    descripcion: string:128 nullable default:null charset:'utf8'
+    activo: boolean nullable default:true
+    valor1: decimal:8,2 nullable default:null
+    valor2: string:128 nullable default:null
+    valor3: boolean nullable default:false
+    indexes:
+      - primary: tabla, tabla_id
+      - index: nombre
+    softDeletes: true
+
+  ventas\Cliente:
+    nombre: string
+
+  compras\Vendedor:
+    nombre: string
+
+# seeder: Pais, Ciudad, Direccion, Entidad, Tabla

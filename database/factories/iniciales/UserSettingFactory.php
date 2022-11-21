@@ -3,8 +3,6 @@
 namespace Database\Factories\Backend;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use App\Models\Backend\User;
 use App\Models\Backend\UserSetting;
 
 class UserSettingFactory extends Factory
@@ -23,10 +21,16 @@ class UserSettingFactory extends Factory
      */
     public function definition()
     {
+        $theme = implode($this->faker->randomElements($array = ['dark', 'light', 'medium'], $count = 1)); // array('dark')
+        $language = implode($this->faker->randomElements($array = ['fr-FR', 'es-ES', 'en-EN'], $count = 1));
+        $autologin = $this->faker->boolean($chanceOfGettingTrue = 70);
+
+        // dd([$theme, $language, $autologin]);
+
         return [
-            'theme' => $this->faker->randomElements($array = ['dark', 'light', 'medium'], $count = 1), // array('dark')
-            'language' => $this->faker->randomElements($array = ['fr-FR', 'es-ES', 'en-EN'], $count = 1),
-            'autologin' => $this->faker->boolean,
+            'theme' => $theme, // array('dark')
+            'language' => $language,
+            'autologin' => $autologin,
         ];
     }
 }

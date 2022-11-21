@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 
-use App\Models\Backend\Color;
+use App\Models\Backend\Marcador;
 
 class CreatePosts extends Component
 {
@@ -85,7 +85,7 @@ class CreatePosts extends Component
 
         $imagen = $this->imagen->store('images/avatars/');
 
-        Color::updateOrCreate([
+        Marcador::updateOrCreate([
             'nombre' => $this->nombre,
             'babosa' => Str::slug($this->nombre),
             'hexa' => $this->hexa,

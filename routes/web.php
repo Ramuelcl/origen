@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PrincipalController;
 use App\Http\Controllers\backend\dashboardController;
-use App\Http\Livewire\Backend\Colores\ShowPosts;
+use App\Http\Controllers\PrincipalController;
+use Illuminate\Support\Facades\Route;
 
 Route::controller(PrincipalController::class)
     ->prefix('')
@@ -27,7 +26,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     ->as('')
     ->group(function () {
         Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
-        Route::get('/colores', [ShowPosts::class, 'render'])->name('colores');
+        Route::get('/marcadores', function () {
+            return view('backend.marcadores.marcadores');
+        })->name('marcadores');
     });
 
 // Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])

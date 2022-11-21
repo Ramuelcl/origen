@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Str;
 
-use App\Models\Backend\Color;
+use App\Models\Backend\Marcador;
 
 class ShowPosts extends Component
 {
@@ -56,15 +56,15 @@ class ShowPosts extends Component
 
     public function mount($email = '')
     {
-        $this->datos = Color::orderBy($this->orden, $this->direccion)->get();
+        $this->datos = Marcador::orderBy($this->orden, $this->direccion)->get();
     }
 
     public function render()
     {
         $this->updatedQuery();
 
-        // $this->datos = Color::all();
-        $this->datos = Color::where('nombre', 'like', '%' . $this->search . '%')->get();
+        // $this->datos = Marcador::all();
+        $this->datos = Marcador::where('nombre', 'like', '%' . $this->search . '%')->get();
         return view('livewire.backend.colores.show-posts', ['datos' => $this->datos]); //->layout('layouts.dashboard')
     }
     public function updatedQuery()
@@ -79,7 +79,7 @@ class ShowPosts extends Component
         }
         $len = Str::length($search);
         if ($len > 4) {
-            $this->datos = Color::where('nombre', 'like', $search)
+            $this->datos = Marcador::where('nombre', 'like', $search)
                 ->orWhere('hexa', 'like', $search)
                 ->orderBy($this->orden, $this->direccion)
                 ->get();

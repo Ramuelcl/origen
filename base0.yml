@@ -35,6 +35,7 @@ models:
     imagen: string:128 nullable default:null charset:'utf8'
     rgb: string:20 nullable default:null charset:'utf8'
     metadata: json nullable
+    activo: boolean default:true
     softDeletes: true
     relationships:
       morphedByMany: Post:postIndex, Video:videoIndex, Imagen:imagenIndex

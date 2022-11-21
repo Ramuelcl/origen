@@ -6,13 +6,13 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Str;
 // use Illuminate\Support\Facades\DB;
-use App\Models\backend\Color;
+use App\Models\backend\Marcador;
 
 class ShowPosts extends Component
 {
     // use Search;
     use WithPagination;
-    private $tabla = 'colors';
+    private $tabla = 'marcadores';
     public $isActive = true;
 
     public $query = '';
@@ -66,8 +66,8 @@ class ShowPosts extends Component
     public function mount($url = null)
     {
         // $this->url = $url;
-        // $this->data = Color::all();
-        $this->data = Color::orderBy($this->orden, $this->direccion)->get();
+        // $this->data = Marcador::all();
+        $this->data = Marcador::orderBy($this->orden, $this->direccion)->get();
     }
 
     public function render()
@@ -96,7 +96,7 @@ class ShowPosts extends Component
         }
         if ($len > $largoMinimo) {
             $search = '%' . $search . '%';
-            $this->data = Color::where('id', 'like', $search)
+            $this->data = Marcador::where('id', 'like', $search)
                 ->orWhere('nombre', 'like', $search)
                 ->orWhere('hexa', 'like', $search)
                 ->orderBy($this->orden, $this->direccion)

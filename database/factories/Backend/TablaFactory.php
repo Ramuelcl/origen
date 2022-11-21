@@ -24,7 +24,9 @@ class TablaFactory extends Factory
     {
         return [
             'descripcion' => $this->faker->words(
-                $nb = \rand($min=2, $max=4), $asText = true),
+                $nb = \rand($min = 2, $max = 4),
+                $asText = true
+            ),
         ];
     }
 }

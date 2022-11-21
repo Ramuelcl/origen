@@ -34,7 +34,7 @@ $menu3 = [
 ];
 $layouts['encabezado'] = 'Tablero';
 $users = \App\Models\User::all()->count();
-$colores = \App\Models\Backend\Color::all()->count();
+$colores = \App\Models\Backend\Marcador::all()->count();
 $total = $users + $colores;
 @endphp
 

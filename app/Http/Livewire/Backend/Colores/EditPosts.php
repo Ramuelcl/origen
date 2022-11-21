@@ -7,13 +7,13 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 
-use App\Models\backend\Color;
+use App\Models\backend\Marcador;
 
 class EditPosts extends Component
 {
-    public $color;
+    public $Marcador;
 
-    public function mount(Color $color)
+    public function mount(Marcador $color)
     {
         $this->color = $color;
         $this->idImagen = rand();

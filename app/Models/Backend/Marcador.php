@@ -17,7 +17,7 @@ class Marcador extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'babosa', 'hexa', 'imagen', 'rgb', 'metadata'];
+    protected $fillable = ['nombre', 'babosa', 'hexa', 'imagen', 'rgb', 'metadata', 'activo'];
 
     /**
      * The attributes that should be cast to native types.
@@ -27,6 +27,7 @@ class Marcador extends Model
     protected $casts = [
         'id' => 'integer',
         'metadata' => 'array',
+        'activo' => 'boolean',
     ];
 
     public function postIndices()

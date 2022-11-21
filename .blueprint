@@ -7,16 +7,16 @@ created:
     - database/factories/backend/TablaFactory.php
     - database/factories/ventas/ClienteFactory.php
     - database/factories/compras/VendedorFactory.php
-    - database/migrations/2022_11_15_223302_create_pais_table.php
-    - database/migrations/2022_11_15_223303_create_ciudads_table.php
-    - database/migrations/2022_11_15_223304_create_direccions_table.php
-    - database/migrations/2022_11_15_223305_create_telefonos_table.php
-    - database/migrations/2022_11_15_223306_create_entidads_table.php
-    - database/migrations/2022_11_15_223307_create_tablas_table.php
-    - database/migrations/2022_11_15_223308_create_clientes_table.php
-    - database/migrations/2022_11_15_223309_create_vendedors_table.php
-    - database/migrations/2022_11_15_223310_create_entidades_table.php
-    - database/migrations/2022_11_15_223311_create_entidadables_table.php
+    - database/migrations/2022_11_21_181148_create_pais_table.php
+    - database/migrations/2022_11_21_181149_create_ciudads_table.php
+    - database/migrations/2022_11_21_181150_create_direccions_table.php
+    - database/migrations/2022_11_21_181151_create_telefonos_table.php
+    - database/migrations/2022_11_21_181152_create_entidads_table.php
+    - database/migrations/2022_11_21_181153_create_tablas_table.php
+    - database/migrations/2022_11_21_181154_create_clientes_table.php
+    - database/migrations/2022_11_21_181155_create_vendedors_table.php
+    - database/migrations/2022_11_21_181156_create_entidades_table.php
+    - database/migrations/2022_11_21_181157_create_entidadables_table.php
     - app/Models/backend/Pais.php
     - app/Models/backend/Ciudad.php
     - app/Models/backend/Direccion.php
@@ -35,7 +35,7 @@ models:
     posts\Post: { user_id: 'biginteger unsigned', name: 'string:32', contenido: 'text nullable', publicado: 'datetime nullable default:CURRENT_TIMESTAMP', actualizado: 'datetime nullable default:CURRENT_TIMESTAMP' }
     posts\Video: { name: 'string:32', user_id: 'biginteger unsigned', url: 'string:128' }
     backend\Pais: { nombre: 'string:50 unique', bandera: 'string:128 nullable default:null', idioma: 'string:5 nullable default:null', timestamps: false, relationships: { BelongsTo: 'Ciudad:ciudades' } }
-    backend\Ciudad: { nombre: 'string:50', pais_id: 'id foreign nullable default:null', timestamps: false, relationships: { BelongsTo: 'Direccion:direcciones' } }
+    backend\Ciudad: { nombre: 'string:50 nullable default:null', pais_id: 'id foreign nullable default:null', timestamps: false, relationships: { BelongsTo: 'Direccion:direcciones' } }
     backend\Direccion: { numero: 'string:8', calle: 'string:50', codPostal: 'string:6', ciudad_id: 'id:Ciudad foreign nullable default:null', relationships: { BelongsTo: 'Entidad:entidades' } }
     backend\Telefono: { tipo: 'string:2', numero: 'string:13', relationships: { BelongsToMany: 'Entidad:entidades' } }
     backend\Entidad: { tipo: 'enum:perfil,cliente,proveedor,cli_pro', razonSocial: 'string:128', nombres: 'string:80', apellidos: 'string:80', activo: 'boolean default:true', eMail: 'string unique', relationships: { hasMany: 'Direccion:direcciones, Telefono:telefonos', morphedByMany: 'Cliente:clienteIndex, Vendedor:vendedorIndex, Perfil:perfilIndex' } }

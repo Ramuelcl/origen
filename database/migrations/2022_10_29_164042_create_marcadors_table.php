@@ -46,6 +46,10 @@ class CreateMarcadorsTable extends Migration
                 ->default(null)
                 ->charset('utf8');
             $table->json('metadata')->nullable();
+            $table
+                ->boolean('activo')
+                ->nullable()
+                ->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

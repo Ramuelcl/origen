@@ -19,7 +19,7 @@ class CreateUserSettingsTable extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('theme', 20)->default('dark')->charset('utf8');
             $table->string('language', 5)->default('fr-FR')->charset('utf8');
-            $table->boolean('autologin')->default(true);
+            $table->boolean('autologin')->nullable()->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

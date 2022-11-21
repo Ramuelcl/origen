@@ -45,7 +45,8 @@ class MarcadorFactory extends Factory
             $hexa = '#' . $v['hexa'];
             $rgb = $v['rgb'];
             $metadata = json_encode([$nombre, $hexa, $rgb]);
-
+            $activo = (int)$this->faker->boolean($chanceOfGettingTrue = 70);
+            // dd($activo, $metadata);
             $imagen = 'colores/' . $this->faker->image($dir = $filePath, $width = 640, $height = 480, $category = null, $word = false);
             // $imagen = $this->faker->imageUrl(640, 480, null, false);
 
@@ -57,8 +58,8 @@ class MarcadorFactory extends Factory
             //            $sql = "INSERT INTO marcadores (`nombre`,`babosa`,`hexa`,`rgb`,`metadata`,`imagen`) VALUES (
             //                '$nombre', '$babosa', '$hexa', '$rgb', '$metadata', '$imagen'
             //            );";
-            $sql = "INSERT INTO marcadores (`nombre`,`babosa`,`hexa`,`rgb`,`metadata`) VALUES (
-                '$nombre', '$babosa', '$hexa', '$rgb', '$metadata');";
+            $sql = "INSERT INTO marcadores (`nombre`,`babosa`,`hexa`,`rgb`,`metadata`, `activo`) VALUES (
+                '$nombre', '$babosa', '$hexa', '$rgb', '$metadata', '$activo');";
 
             DB::statement($sql);
             // $this->i++;
