@@ -5,15 +5,22 @@ namespace App\Http\Livewire\Backend\Marcadores;
 use Livewire\Component;
 use App\Models\backend\Marcador;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class Marcadores extends Component
 {
     use WithPagination;
 
-    protected $pags = 5;
+    protected $pags = 7;
+
+    // variables de base de datos
+    // public $activo = '';
+    public $query = ''; // usado en blade
+    public $q; // muestra la consulta
+
     protected $datas;
 
-    public $orden = 'id';
+    public $campo = 'id';
     public $direccion = 'desc';
     public $display = [
         'title' => 'Marcadores',
@@ -67,16 +74,16 @@ class Marcadores extends Component
         ],
         //
     ];
-    public $chkAll = false;
+    // variables publicas
+    public $chkActivo = false;
+
     public function render()
     {
-        $this->datas = Marcador::where('id', '>=', 1)
-            ->when($this->chkAll, function ($query) {
-                return $query->where('activo', 1); //where('id', '>=', 1)
-            })
-            ->paginate($this->pags);
-        // ->cursorPaginate($perPage = $this->pags, $columns = ['*'], $pageName = 'marcadores');
-        return view('livewire.backend.marcadores.marcadores', ['datas' => $this->datas]);
+        $this->updatedQuery();
+        // dd($this->datas);
+        return view('livewire.backend.marcadores.marcadores', [
+            'datas' => $this->datas,
+        ]);
     }
 
     public function save()
@@ -87,16 +94,45 @@ class Marcadores extends Component
 
         return back()->with('message', __('Mensaje'));
     }
-    public function fncOrden($orden)
+    public function fncOrden($campo)
     {
-        // dump($orden);
-        if ($this->orden == $orden) {
+        dump($campo);
+        if ($this->campo == $campo) {
             $this->direccion = $this->direccion == 'desc' ? 'asc' : 'desc';
         } else {
-            $this->orden = $orden;
+            $this->campo = $campo;
             $this->direccion = 'asc';
         }
 
-        // $this->updatedQuery();
+        $this->updatedQuery();
+    }
+    public function updatingchkActivo()
+    {
+        $this->resetPage();
+    }
+    public function updatedQuery()
+    {
+        // dd(gettype($this->query), $this->query);
+        //     $this->query = implode($this->query);
+        // }
+        $this->datas = Marcador::where('id', '>', 0)
+            ->when($this->query, function ($query) {
+                return $query->where(function ($query) {
+                    $search = '%' . $this->query . '%';
+                    $query->where('id', 'like', $search)
+                        ->orWhere('nombre', 'like', $search)
+                        ->orWhere('hexa', 'like', $search);
+                });
+            })
+
+            ->when($this->chkActivo, function ($query) {
+                return $query->active();
+            })
+
+            ->orderBy($this->campo, $this->direccion);
+
+        // dump($this->datas);
+
+        $this->datas = $this->datas->paginate($this->pags);
     }
 }

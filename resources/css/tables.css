@@ -12,5 +12,5 @@
  }
 
 .table tbody tr:nth-child(2n+1){
-    @apply bg-gray-200;
+    @apply bg-gray-50;
  }

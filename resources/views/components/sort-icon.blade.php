@@ -1,6 +1,6 @@
-@props(['sortDir', 'sortOrden', 'sortField'])
+@props(['sortDir', 'sortCampo', 'campo'])
 
-@if( $sortOrden == $sortField)
+@if( $sortCampo == $campo)
 @if( $sortDir == "asc")
 <i class="fa-solid fa-sort-up"></i>
 @else

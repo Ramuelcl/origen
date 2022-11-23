@@ -1,35 +1,34 @@
 <div class="px-2 sm:px-20 bg-white border-b border-gray-200">
     @include('livewire.backend.marcadores.mensaje')
     <div class="mt-4 text-2xl flex justify-between shadow-inner">
-        <div class="ml-2 mt-2">{{__($display['title'])}}</div>
+        <div class="ml-2 mt-2">{{__($display['title'])}}
+        </div>
         <div class="mr-2 mt-2">
             <button wire:click="fncNuevo" class="btn btn-blue text-lg">
                 Nuevo
             </button>
         </div>
     </div>
-
     <div class="mt-2">
         <div class="flex justify-between">
             <div>
-                <input wire:model.debounce.500ms="q" type="search" placeholder="Buscar" class="mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline placeholder-blue-400" name="">
+                <input wire:model.debounce.500ms="query" type="search" placeholder="Buscar" class="mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline placeholder-blue-400" name="">
             </div>
             <div class="mr-2">
-                <input type="checkbox" class="mr-2 leading-tight" name="" wire:model="chkAll"> ¿Activos?
+                <input type="checkbox" class="mr-2 leading-tight" name="" wire:model="chkActivo">¿Activos?
             </div>
         </div>
 
         <table class="table">
             <thead>
                 <tr>
-
                     @foreach ($fields as $key => $field)
                     @if ($field['table']['display'])
 
                     <th scope="col" wire:click="fncOrden({{ $field['name'] }})">
                         <div class="flex items-center">
                             {{ __($field['table']['titre']) }}
-                            <x-sort-icon sortField="{{ $field['name'] }}" :sortDir="$direccion" :sortOrden="$orden" />
+                            <x-sort-icon campo="{{ $field['name'] }}" :sortDir="$direccion" :sortCampo="$campo" />
 
                         </div>
                     </th>
@@ -69,6 +68,6 @@
         </table>
     </div>
     <div class="mt-4">
-        {{ $datas->onEachSide(5)->links()}}
+        {{ $datas->links()}}
     </div>
 </div>

@@ -44,4 +44,8 @@ class Marcador extends Model
     {
         return $this->morphedByMany(\App\Models\posts\Imagen::class, 'marcadorable');
     }
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
 }
