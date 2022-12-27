@@ -52,6 +52,9 @@ $menus = [
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard.*')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list.*')">
+                        {{ __('Usuarios') }}
+                    </x-jet-nav-link>
                     @endauth
                 </div>
             </div>
@@ -197,6 +200,9 @@ $menus = [
             @auth
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')">
+                {{ __('Usuarios') }}
             </x-jet-responsive-nav-link>
             @endauth
         </div>

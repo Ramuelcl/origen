@@ -29,6 +29,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/marcadores', function () {
             return view('backend.marcadores.marcadores');
         })->name('marcadores');
+
+        Route::get('users/list', [App\Http\Controllers\backend\users\UserController::class, 'list'])->name('users.list');
     });
 
 // Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])

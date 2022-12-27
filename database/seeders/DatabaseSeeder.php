@@ -3,10 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\RoleSeeder;
-use Database\Seeders\UserSeeder;
-use Database\Seeders\MarcadorSeeder;
-use Database\Seeders\PaisSeeder;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -32,7 +28,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $disk->put('image.jpg', $content);
-        **/
+         **/
 
         /**
          * usando Storage

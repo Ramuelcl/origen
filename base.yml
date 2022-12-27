@@ -63,7 +63,9 @@ models:
     softDeletes: true
     relationships:
       morphToMany: Marcador, Categoria
-Seeder: Categoria, Perfil
+# Seeder: Categoria, Perfil
+
+
 # https://github.com/barryvdh/laravel-debugbar
 # ==============================================
 # models:

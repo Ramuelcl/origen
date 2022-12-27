@@ -27,24 +27,24 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $name=$this->faker->lastName();
-        $prename=$this->faker->unique()->firstName();
+        $name = $this->faker->lastName();
+        $prename = $this->faker->unique()->firstName();
 
         $i = $this->faker->numberBetween($min = 0, $max = 6);
-        if ($i==0) {
-            $email="$name$prename";
-        } elseif ($i==1) {
-            $email="$prename.$name";
-        } elseif ($i==2) {
-            $email="$name.$prename";
-        } elseif ($i==3) {
-            $email="$prename$name";
-        } elseif ($i==4) {
-            $email=$name.'_'.$prename;
-        } elseif ($i==5) {
-            $email=$prename.'_'.$name;
+        if ($i == 0) {
+            $email = "$name$prename";
+        } elseif ($i == 1) {
+            $email = "$prename.$name";
+        } elseif ($i == 2) {
+            $email = "$name.$prename";
+        } elseif ($i == 3) {
+            $email = "$prename$name";
+        } elseif ($i == 4) {
+            $email = $name . '_' . $prename;
+        } elseif ($i == 5) {
+            $email = $prename . '_' . $name;
         } else {
-            $email=$this->faker->userName();
+            $email = $this->faker->userName();
         }
         $email = \limpiar_caracteres($email);
 
@@ -69,11 +69,12 @@ class UserFactory extends Factory
         // echo($avatar);
         // TODO: registrar foto en directorio, no se queda, se borra sola inmediatamente
         return [
-            'name' => $name ." ". $prename,
+            'name' => $name . " " . $prename,
             // 'prename' => $prename,
-            'email' => $email.'@'.$this->faker->freeEmailDomain(),
+            'email' => $email . '@' . $this->faker->freeEmailDomain(),
             'email_verified_at' => now(),
             // 'profile_photo_path'=>$avatar1,
+            'is_active' => $this->faker->boolean(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
@@ -100,14 +101,14 @@ class UserFactory extends Factory
      */
     public function withPersonalTeam()
     {
-        if (! Features::hasTeamFeatures()) {
+        if (!Features::hasTeamFeatures()) {
             return $this->state([]);
         }
 
         return $this->has(
             Team::factory()
                 ->state(function (array $attributes, User $user) {
-                    return ['name' => $user->name.'\'s Team', 'user_id' => $user->id, 'personal_team' => true];
+                    return ['name' => $user->name . '\'s Team', 'user_id' => $user->id, 'personal_team' => true];
                 }),
             'ownedTeams'
         );

@@ -16,12 +16,27 @@ class Marcadores extends Component
     // variables de base de datos
     // public $activo = '';
     public $query = ''; // usado en blade
-    public $q; // muestra la consulta
+    public $q = null; // muestra la consulta
 
-    protected $datas;
+    public $marcador = [];
 
-    public $campo = 'id';
-    public $direccion = 'desc';
+    public $confirmMarcadorAdd;
+    // caja de dialogo Ok, Cancel
+    public $confirmMarcadorDelete = false;
+    protected $queryString = [
+        'chkActivo' => ['except' => false],
+        'query' => ['except' => ''],
+        'sortField' => ['except' => 'id'],
+        'sortDir' => ['except' => true],
+    ];
+    protected $rules = [
+        'marcador.nombre' => ['required|string|min:4'],
+        'marcador.hexa' => ['required|string|min:7|max:7|unique:marcadores,id'],
+        'marcador.activo' => ['boolean'],
+    ];
+    protected $datos;
+    public $sortField = 'id';
+    public $sortDir = 'desc';
     public $display = [
         'title' => 'Marcadores',
         'created' => 'creado...',
@@ -37,39 +52,37 @@ class Marcadores extends Component
     public $fields = [
         //0
         [
-            'name' => 'chechaUno',
-            'input' => ['type' => 'checkbox', 'label' => '', 'display' => false, 'disabled' => true],
-            'table' => ['titre' => '', 'display' => false, 'disabled' => true]
+            'name' => 'id',
+            'input' => ['type' => 'text', 'label' => 'Id', 'display' => false, 'disabled' => true],
+            'table' => ['titre' => 'id', 'display' => true, 'disabled' => true]
         ],
         //1
-        ['name' => 'id', 'input' => ['type' => 'text', 'label' => '', 'display' => false, 'disabled' => true], 'table' => ['titre' => 'id', 'display' => true, 'disabled' => true]],
-        //2
         [
             'name' => 'nombre',
             'input' => ['type' => 'text', 'label' => 'Nombre', 'display' => true, 'disabled' => false],
             'table' => ['titre' => 'Nombre', 'display' => true, 'disabled' => false]
         ],
-        //3
+        //2
         [
             'name' => 'hexa',
             'input' => ['type' => 'text', 'label' => 'Hexa', 'display' => true, 'disabled' => false],
             'table' => ['titre' => 'Hexa', 'display' => true, 'disabled' => false]
         ],
-        //4
+        //3
         [
             'name' => 'rgb',
-            'input' => ['type' => 'text', 'label' => 'Rgb', 'display' => true, 'disabled' => true], 'table' => ['titre' => 'Rgb', 'display' => false, 'disabled' => true]
+            'input' => ['type' => 'text', 'label' => 'Rgb', 'display' => false, 'disabled' => true], 'table' => ['titre' => 'Rgb', 'display' => false, 'disabled' => true]
         ],
-        //5
+        //4
         [
             'name' => 'metadata',
             'input' => ['type' => 'json', 'label' => 'meta', 'display' => false, 'disabled' => true],
             'table' => ['titre' => 'meta', 'display' => false, 'disabled' => true]
         ],
-        //6
+        //5
         [
             'name' => 'activo',
-            'input' => ['type' => 'boolean', 'label' => 'activo', 'display' => true, 'disabled' => false],
+            'input' => ['type' => 'checkbox', 'label' => 'activo', 'display' => true, 'disabled' => false],
             'table' => ['titre' => 'Activo', 'display' => true, 'disabled' => false]
         ],
         //
@@ -80,28 +93,40 @@ class Marcadores extends Component
     public function render()
     {
         $this->updatedQuery();
-        // dd($this->datas);
+        // dd($this->datos);
         return view('livewire.backend.marcadores.marcadores', [
-            'datas' => $this->datas,
+            'datos' => $this->datos,
         ]);
     }
 
     public function save()
     {
-        $this->validate();
+        $this->validate($this->rules);
+        // dd($this->marcador, $this->rules);
 
-        $user = Marcador::updateOrCreate([]);
+        // $reemplaza = Marcador::updateOrCreate([
+        Marcador::Create([
+            'nombre' => $this->marcador['nombre'],
+            'hexa' => $this->marcador['hexa'],
+            'activo' => $this->marcador['activo'] ?? 0,
+        ]);
 
         return back()->with('message', __('Mensaje'));
     }
-    public function fncOrden($campo)
+
+    public function delete(Marcador $marcador)
     {
-        dump($campo);
-        if ($this->campo == $campo) {
-            $this->direccion = $this->direccion == 'desc' ? 'asc' : 'desc';
+        $marcador->delete();
+        $this->confirmMarcadorDelete = false;
+    }
+    public function fncOrden($sortField)
+    {
+        // dd($sortField);
+        if ($this->sortField == $sortField) {
+            $this->sortDir = $this->sortDir == 'desc' ? 'asc' : 'desc';
         } else {
-            $this->campo = $campo;
-            $this->direccion = 'asc';
+            $this->sortField = $sortField;
+            $this->sortDir = 'asc';
         }
 
         $this->updatedQuery();
@@ -115,7 +140,7 @@ class Marcadores extends Component
         // dd(gettype($this->query), $this->query);
         //     $this->query = implode($this->query);
         // }
-        $this->datas = Marcador::where('id', '>', 0)
+        $this->datos = Marcador::where('id', '>', 0)
             ->when($this->query, function ($query) {
                 return $query->where(function ($query) {
                     $search = '%' . $this->query . '%';
@@ -129,10 +154,23 @@ class Marcadores extends Component
                 return $query->active();
             })
 
-            ->orderBy($this->campo, $this->direccion);
+            ->orderBy($this->sortField, $this->sortDir);
 
-        // dump($this->datas);
+        // guarda la consulta
+        // if (DEBUG) {
+        $this->q = $this->datos->toSql();
+        // }
+        // dump($this->datos);
 
-        $this->datas = $this->datas->paginate($this->pags);
+        $this->datos = $this->datos->paginate($this->pags);
+    }
+    public function confirmMarcadorDelete($id)
+    {
+        $this->confirmMarcadorDelete = $id;
+    }
+    public function confirmMarcadorAdd()
+    {
+        $this->reset(['marcador']);
+        $this->confirmMarcadorAdd = true;
     }
 }

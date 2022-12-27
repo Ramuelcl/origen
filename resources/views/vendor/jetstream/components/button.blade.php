@@ -1,5 +1,5 @@
-{{-- resources\views\vendor\jetstream\components\boton.blade.php --}}
-{{-- variables pasadas: :$bgColor, :$textColor --}}
+<!-- resources\views\vendor\jetstream\components\boton.blade.php -->
+<!-- variables pasadas: :$bgColor, :$textColor -->
 @props(['tipo' => 'success'])
 
 @php
@@ -20,7 +20,7 @@ break;
 }
 @endphp
 
-{{-- atributos pasados: class, type --}}
+<!-- atributos pasados: class, type -->
 <button {{ $attributes->merge([
     'type' => 'button',
     'class' => $clase,

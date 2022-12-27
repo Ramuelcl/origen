@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 //
 use App\Models\backend\UserSetting;
 use App\Models\backend\Perfil;
+use Spatie\Permission\Models\Role;
 // Spatie
 use Spatie\Permission\Traits\HasRoles;
 
@@ -61,6 +62,11 @@ class User extends Authenticatable
         return $this->hasOne(UserSetting::class);
     }
 
+    public function scopeActive($query)
+    {
+        $query->where('is_active', 1);
+    }
+
     // relacion 1:1
     public function perfil()
     {
@@ -73,4 +79,9 @@ class User extends Authenticatable
         // la que más se utiliza
         return $this->hasOne(Perfil::class); //, 'foreign_key', 'local_key'
     }
+    // relacion 1:n
+    // public function Roles()
+    // {
+    //     return $this->belongsToMany('Role', 'assigned_roles'); //, 'foreign_key', 'local_key'
+    // }
 }

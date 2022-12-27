@@ -84,7 +84,7 @@ class UserSeeder extends Seeder
         $array1 = ['light', 'dark'];
         $array2 = ['es-ES', 'fr-FR', 'en-EN'];
 
-        User::factory(48)
+        User::factory(248)
             ->create()
             ->each(function ($user) {
                 // dump($user);
