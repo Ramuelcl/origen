@@ -3,20 +3,26 @@
 namespace App\Http\Livewire\Backend\Users;
 
 use App\Models\User;
+//
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+//
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 
 class UserTable extends Component
 {
     use
-        WithPagination;
+        WithPagination,
+        WithFileUploads;
 
     public $strRegs = 5;
     public $Search;
     public $clear;
     public $onlyActive = false;
     public $mode = null;
+    public $filePath = 'images/avatars';
 
     protected $users;
     public $sortField = 'id', $sortDir = 'Desc';
@@ -28,6 +34,7 @@ class UserTable extends Component
     ];
     protected $rules = [
         'name' => ['required', 'string', 'min:4'],
+        'profile_photo_path' => ['image', 'max:1024'],
     ];
     public $rules2;
     protected $rulesMsg =
@@ -39,6 +46,8 @@ class UserTable extends Component
         'email.email' => 'format eMail is myname@resource.com',
         'email.min' => 'eMail must have 7 chars',
         'email.unique' => 'eMail is not unique, exist',
+        'profile_photo_path.image' => 'the file must image',
+        'profile_photo_path.max' => 'max image must have 1024',
         'password.required' => 'password is required',
         'password.regex' => 'password must contain at least one special character as "@$!%*#?&", one number, one lowercase, one uppercase.',
         'password_confirm.same' => 'password are not the same',
@@ -52,6 +61,8 @@ class UserTable extends Component
     public $name;
     public $email;
     public $is_active;
+    public $profile_photo_path;
+    public $old_photo_path;
     public $password;
     public $password_confirm;
 
@@ -136,7 +147,7 @@ class UserTable extends Component
         ];
 
         $this->resetErrorBag();
-        $this->reset(['id', 'name', 'email', 'password', 'password_confirm']);
+        $this->reset(['id', 'name', 'email', 'profile_photo_path', 'password', 'password_confirm']);
         $this->title = 'Add register';
         $this->is_active = true;
         $this->ModalAddEdit = true;
@@ -153,6 +164,7 @@ class UserTable extends Component
         ];
         $this->name = $this->user->name;
         $this->email = $this->user->email;
+        $this->old_photo_path = $this->profile_photo_path = $this->user->profile_photo_path;
         $this->password = '';
         $this->password_confirm = '';
         $this->is_active = $this->user->is_active;
@@ -175,6 +187,7 @@ class UserTable extends Component
     {
         if ($this->ModalDelete > 2) {
             $this->user = User::find($this->ModalDelete);
+            Storage::delete($this->user->profile_photo_path);
             $this->user->delete();
         }
         $this->ModalDelete = false;
@@ -213,7 +226,8 @@ class UserTable extends Component
         //     if ($save)
         //         $this->user->save();
         // }
-
+        $image = $this->profile_photo_path->Store($this->filePath);
+        // dd($image);
         $user = User::updateOrCreate(
             [
                 'email' => $this->email,
@@ -222,6 +236,7 @@ class UserTable extends Component
             [
                 'name' => $this->name,
                 'is_active'  => $this->is_active,
+                'profile_photo_path' => $image,
             ]
         );
         // dd($user);

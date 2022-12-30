@@ -23,22 +23,28 @@
                             <th wire:click="fncOrden('email')" scope="col" class="px-6 py-3 cursor-pointer bg-gray-50 text-left text-xs font-medium text-gray-500 tracking-wider">eMail
                                 <x-sort-icon campo="email" :sortDir="$sortDir" :sortField="$sortField" />
                             </th>
+                            <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500">Roles</th>
+                            <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500">Avatar</th>
                             @if (!$onlyActive)
-                            <th wire:click="fncOrden('is_active')" scope="col" class="px-6 py-3 cursor-pointer bg-gray-50 text-left text-xs font-medium text-gray-500 tracking-wider">Active
+                            <th wire:click=" fncOrden('is_active')" scope="col" class="px-6 py-3 cursor-pointer bg-gray-50 text-left text-xs font-medium text-gray-500 tracking-wider">Active
                                 <x-sort-icon campo="is_active" :sortDir="$sortDir" :sortField="$sortField" />
                             </th>
                             @endif
                             <th scope="col" class="px-6 py-3 bg-gray-50">Options
-                                <x-jet-button wire:click="fncAdd()" class="btn btn-blue h-6 text-xs justify-between"><i class="fa-solid fa-plus ">{{__(' Add')}}</i></x-jet-button>
+                                @hasrole('super-admin|admin')
+                                <x-jet-button wire:click="fncAdd()" class="btn btn-blue h-6 text-xs justify-between">
+                                    <i class="fa-solid fa-plus ">{{__(' Add')}}</i>
+                                </x-jet-button>
+                                @endhasrole
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($users as $key=>$user)
                         @php
-                        $cl = $key%2 == 0 ?'bg-gray-100':'bg-gray-50';
+                        $cl = $key%2 == 0 ?'100':'50';
                         @endphp
-                        <tr class="{{ $cl }}">
+                        <tr class="bg-gray-{{$cl}}">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <!-- <div class="flex-shrink-0 h-10 w-10">
@@ -57,6 +63,21 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">{{$user->email}}
                                 </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($user->profile_photo_path)
+                                <img class="w-8 h-8 rounded-full" src="{{ Storage::url($user->profile_photo_path)}}">
+                                </img>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <select wire:model="strRegs" class="text-xs">
+                                    <option value="admin">admin</option>
+                                    <option value="moderator">moderator</option>
+                                    <option value="editor">editor</option>
+                                    <option value="writer">writer</option>
+                                    <option value="user">user</option>
+                                </select>
                             </td>
                             @if (!$onlyActive)
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -111,18 +132,32 @@
                 <x-jet-input-error for="is_active" />
             </div>
 
-            @if ($mode === true)
-
             <div class="col-span-6 sm:col-span-4 mb-4">
-                {{ __('Password')}}
-                <x-jet-input id="password" type="password" class="mt-1 block w-full" wire:model.defer="password" />
-                <x-jet-input-error for="password" />
+                {{ __('Avatar')}}
+                <div class="flex">
+                    <x-jet-input id="profile_photo_path" type="file" class="block w-full mr-4" wire:model="profile_photo_path" />
+                    @if ($mode))
+                    <img src="{{ $profile_photo_path->temporaryUrl() }}" class="w10 h-10" />
+                    @elseif (!$mode)
+                    <img src="{{ Storage::url( $profile_photo_path) }}" class="w10 h-10" />
+                    @endif
+                </div>
+                <x-jet-input-error for="profile_photo_path" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4 mb-4">
-                {{ __('Password confirmation')}}
-                <x-jet-input id="password_confirm" type="password" class="mt-1 block w-full" wire:model.defer="password_confirm" />
-                <x-jet-input-error for="password_confirm" />
+            @if ($mode === true)
+            <div class="flex flex-row">
+                <div class="col-span-6 sm:col-span-4 mb-4">
+                    {{ __('Password')}}
+                    <x-jet-input id=" password" type="password" class="mt-1" wire:model.defer="password" />
+                    <x-jet-input-error for="password" />
+                </div>
+
+                <div class="col-span-6 sm:col-span-4 mb-4">
+                    {{ __('Password confirmation')}}
+                    <x-jet-input id="password_confirm" type="password" class="mt-1" wire:model.defer="password_confirm" />
+                    <x-jet-input-error for="password_confirm" />
+                </div>
             </div>
             @endif
 

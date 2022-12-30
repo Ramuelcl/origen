@@ -33,7 +33,7 @@ class MarcadorFactory extends Factory
     {
         Storage::deleteDirectory('images/avatars');
         Storage::makeDirectory('images/avatars');
-        $filePath = 'public/storage/images/avatars';
+        $filePath = 'images/avatars/';
         // dump($filePath);
 
         $colores = $this->colores();

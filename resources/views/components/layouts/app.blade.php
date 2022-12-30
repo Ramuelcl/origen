@@ -50,19 +50,20 @@ $theme = [
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
 
-            {{-- @include('layouts.partials.DarkNav') --}}
-            <!-- Page Heading -->
-            @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-            @endif
+            <main class="flex">
+                <!-- Sidebar -->
+                @include('layouts.partials.sidebar')
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
+                <div class="flex-row">
+                    <!-- Page Heading -->
+                    <header class="bg-white shadow">
+                        <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+                            {{ $header ?? null}}
+                        </div>
+                    </header>
+                    <!-- Page Content -->
+                    {{ $slot }}
+                </div>
             </main>
         </div>
     </x-contenedor>
