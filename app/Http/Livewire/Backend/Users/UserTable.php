@@ -4,6 +4,9 @@ namespace App\Http\Livewire\Backend\Users;
 
 use App\Models\User;
 //
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+//
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -21,10 +24,19 @@ class UserTable extends Component
     public $Search;
     public $clear;
     public $onlyActive = false;
+    public $allRoles = false;
+    public $allPermissions = false;
+    public $addRoles = false;
+    public $addPermissions = false;
     public $mode = null;
     public $filePath = 'images/avatars';
 
+    // tablas
     protected $users;
+    protected $roles;
+    protected $permissions;
+
+    // orden y filtro
     public $sortField = 'id', $sortDir = 'Desc';
     protected $queryString = [
         'onlyActive' => ['except' => false],
@@ -32,11 +44,13 @@ class UserTable extends Component
         'sortField' => ['except' => 'id'],
         'sortDir' => ['except' => 'Desc'],
     ];
+
+    // validar campos
     protected $rules = [
         'name' => ['required', 'string', 'min:4'],
         'profile_photo_path' => ['image', 'max:1024'],
     ];
-    public $rules2;
+
     protected $rulesMsg =
     [
         'name.required' => 'Name is required',
@@ -58,6 +72,8 @@ class UserTable extends Component
     public $ModalDelete = false;
     public $title;
 
+    // campos de la tabla
+    public $user_id;
     public $name;
     public $email;
     public $is_active;
@@ -69,9 +85,14 @@ class UserTable extends Component
     public function render()
     {
         $this->updatedQuery();
+        // $this->roles2 = array_merge($this->roles->toArray(), [["id" => "all", "name" => "All"], ["id" => "new", "name" => "New"]]);
+
         // dd($this->users);
+        // dd($roles);
         return view('livewire.backend.users.user-table', [
             'users' => $this->users,
+            'roles' => $this->roles,
+            'permissions' => $this->permissions,
         ]);
     }
 
@@ -96,9 +117,8 @@ class UserTable extends Component
             ->when($this->onlyActive, function ($query) {
                 return $query->active($query);
             })
-
             ->orderBy($this->sortField, $this->sortDir);
-
+        // ->load($roles = $user->getRoleNames());
         // guarda la consulta
         // if (DEBUG) {
         // $this->q = $this->users->toSql();
@@ -106,6 +126,8 @@ class UserTable extends Component
         // dd($this->users);
 
         $this->users = $this->users->paginate($this->strRegs);
+        $this->roles = Role::all();
+        $this->permissions = Permission::all();
     }
 
     public function updatingSearch()
@@ -245,5 +267,13 @@ class UserTable extends Component
         $this->mode = null; // crear/editar registro
 
         return back()->with('message', __('Mensaje'));
+    }
+    public function fncSelectRol()
+    {
+        dd($this->roles2);
+        $selected = $this->roles;
+        $size = sizeof($selected);
+        unset($selected[$size - 1], $selected[$size - 1]);
+        dd($selected);
     }
 }

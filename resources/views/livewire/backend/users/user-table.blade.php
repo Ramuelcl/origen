@@ -31,11 +31,11 @@
                             </th>
                             @endif
                             <th scope="col" class="px-6 py-3 bg-gray-50">Options
-                                @hasrole('super-admin|admin')
+                                @hasanyrole('super-admin|admin')
                                 <x-jet-button wire:click="fncAdd()" class="btn btn-blue h-6 text-xs justify-between">
                                     <i class="fa-solid fa-plus ">{{__(' Add')}}</i>
                                 </x-jet-button>
-                                @endhasrole
+                                @endhasanyrole
                             </th>
                         </tr>
                     </thead>
@@ -65,19 +65,17 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
+                                <select class="text-xs">
+                                    @foreach ($user->roles as $role)
+                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
                                 @if ($user->profile_photo_path)
                                 <img class="w-8 h-8 rounded-full" src="{{ Storage::url($user->profile_photo_path)}}">
                                 </img>
                                 @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <select wire:model="strRegs" class="text-xs">
-                                    <option value="admin">admin</option>
-                                    <option value="moderator">moderator</option>
-                                    <option value="editor">editor</option>
-                                    <option value="writer">writer</option>
-                                    <option value="user">user</option>
-                                </select>
                             </td>
                             @if (!$onlyActive)
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -114,53 +112,7 @@
         </x-slot>
 
         <x-slot name="content">
-            <div class="col-span-6 sm:col-span-4 mb-4">
-                {{ __('Name')}}
-                <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="name" />
-                <x-jet-input-error for="name" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4 mb-4">
-                {{ __('eMail')}}
-                <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="email" />
-                <x-jet-input-error for="email" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4 mb-4">
-                {{ __('Active')}}
-                <x-jet-input id="is_active" type="checkbox" class="mr-4 w-6" wire:model.defer="is_active" />
-                <x-jet-input-error for="is_active" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4 mb-4">
-                {{ __('Avatar')}}
-                <div class="flex">
-                    <x-jet-input id="profile_photo_path" type="file" class="block w-full mr-4" wire:model="profile_photo_path" />
-                    @if ($mode))
-                    <img src="{{ $profile_photo_path->temporaryUrl() }}" class="w10 h-10" />
-                    @elseif (!$mode)
-                    <img src="{{ Storage::url( $profile_photo_path) }}" class="w10 h-10" />
-                    @endif
-                </div>
-                <x-jet-input-error for="profile_photo_path" />
-            </div>
-
-            @if ($mode === true)
-            <div class="flex flex-row">
-                <div class="col-span-6 sm:col-span-4 mb-4">
-                    {{ __('Password')}}
-                    <x-jet-input id=" password" type="password" class="mt-1" wire:model.defer="password" />
-                    <x-jet-input-error for="password" />
-                </div>
-
-                <div class="col-span-6 sm:col-span-4 mb-4">
-                    {{ __('Password confirmation')}}
-                    <x-jet-input id="password_confirm" type="password" class="mt-1" wire:model.defer="password_confirm" />
-                    <x-jet-input-error for="password_confirm" />
-                </div>
-            </div>
-            @endif
-
+            @include('livewire.backend.users.tabs')
         </x-slot>
 
         <x-slot name="footer">
