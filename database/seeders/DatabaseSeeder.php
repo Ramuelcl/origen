@@ -47,11 +47,11 @@ class DatabaseSeeder extends Seeder
         // dd(public_path(), storage_path(), public_path("storage"), storage_path('storage'), env('APP_URL').'/public/storage', $folders, $folder);
 
         $this->call([
-            TablaSeeder::class,
 
             RoleSeeder::class,
             UserSeeder::class,
             //
+            TablaSeeder::class,
             PaisSeeder::class,
             DireccionSeeder::class,
             // TelefonoSeeder::class,

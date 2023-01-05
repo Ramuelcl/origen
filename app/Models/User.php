@@ -12,8 +12,9 @@ use Laravel\Sanctum\HasApiTokens;
 //
 use App\Models\backend\UserSetting;
 use App\Models\backend\Perfil;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 // Spatie
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -31,8 +32,8 @@ class User extends Authenticatable
      *
      * @var string[]
      */
+    //profile_photo_url
     protected $fillable = ['name', 'email', 'password', 'is_active'];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -57,6 +58,12 @@ class User extends Authenticatable
      */
     protected $appends = ['profile_photo_url'];
 
+    /**mutators = mutadores */
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
     public function userSetting()
     {
         return $this->hasOne(UserSetting::class);
@@ -82,6 +89,6 @@ class User extends Authenticatable
     // relacion 1:n
     // public function Roles()
     // {
-    //     return $this->belongsToMany('Role', 'assigned_roles'); //, 'foreign_key', 'local_key'
+    //     return $this->belongsToMany(Role::class); //, 'foreign_key', 'local_key'
     // }
 }

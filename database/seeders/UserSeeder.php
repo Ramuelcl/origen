@@ -9,11 +9,10 @@ use App\Models\backend\Perfil;
 // agregamos
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Facades\DB;
 
 // Spatie
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Models\model_has_roles;
 use Spatie\Permission\Models\model_has_permissions;
@@ -26,18 +25,19 @@ class UserSeeder extends Seeder
             'admin' => [
                 'name' => 'Super Admin',
                 'email' => 'admin@email.com',
-                'profile_photo_path' => 'public/storage/images/avatars/admin.png',
+                'profile_photo_path' => 'public/images/avatars/admin.png',
                 'email_verified_at' => now(),
-                'password' => Hash::make('0Admin'), //bcrypt('0Admin')
+                // 'password' => Hash::make('0Admin'), //bcrypt('0Admin')
+                'password' => '0Admin', //bcrypt('0Admin')
                 'remember_token' => Str::random(10),
                 'is_active' => 1,
             ],
             'guest' => [
                 'name' => 'guest',
                 'email' => 'guest@email.com',
-                'profile_photo_path' => 'public/storage/images/avatars/guest.png',
+                'profile_photo_path' => 'public/images/avatars/guest.png',
                 'email_verified_at' => now(),
-                'password' => Hash::make('guest'), //bcrypt('guest')
+                'password' => 'guest', //bcrypt('guest')
                 'remember_token' => Str::random(10),
                 'is_active' => 1,
             ],

@@ -13,6 +13,7 @@ use Livewire\WithFileUploads;
 //
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
 
 class UserTable extends Component
 {
@@ -29,10 +30,12 @@ class UserTable extends Component
     public $addRoles = false;
     public $addPermissions = false;
     public $mode = null;
-    public $filePath = 'images/avatars';
+    public $filePath = 'public/images/avatars';
+
 
     // tablas
     protected $users;
+    public $user;
     protected $roles;
     protected $permissions;
 
@@ -50,6 +53,7 @@ class UserTable extends Component
         'name' => ['required', 'string', 'min:4'],
         'profile_photo_path' => ['image', 'max:1024'],
     ];
+    public $rules2;
 
     protected $rulesMsg =
     [
@@ -215,13 +219,35 @@ class UserTable extends Component
         $this->ModalDelete = false;
     }
 
-    public function save()
+    public function save(Request $request)
     {
 
         $rules = array_merge($this->rules, $this->rules2);
 
         $validado = $this->validate($rules, $this->rulesMsg);
-
+        if ($this->model) {
+            $validado['password'] = Hash::make($this->password);
+            User::Create(
+                $validado
+            );
+        } else {
+            $save = false;
+            if ($this->user->name !== $this->name) {
+                $this->user->name = $this->name;
+                $save = true;
+            }
+            if ($this->user->is_active !== $this->is_active) {
+                $this->user->is_active  = $this->is_active;
+                $save = true;
+            }
+            if ($this->user->profile_photo_path !== $this->profile_photo_path) {
+                $image = $this->profile_photo_path->Store($this->filePath);
+                $this->user->profile_photo_path = $image;
+            }
+            if ($save) {
+                $this->user->save();
+            }
+        }
         // dd([$validado, $rules, $this]);
         $emailExiste = User::where('email', '=', $this->email)->first();
         if ($emailExiste && $this->user->id !== $emailExiste->id) { // crear
@@ -248,26 +274,28 @@ class UserTable extends Component
         //     if ($save)
         //         $this->user->save();
         // }
-        $image = $this->profile_photo_path->Store($this->filePath);
+        // $image = $this->profile_photo_path->Store($this->filePath);
         // dd($image);
-        $user = User::updateOrCreate(
-            [
-                'email' => $this->email,
-                'password' => Hash::make($this->password),
-            ],
-            [
-                'name' => $this->name,
-                'is_active'  => $this->is_active,
-                'profile_photo_path' => $image,
-            ]
-        );
+        // $user = User::updateOrCreate(
+        //     [
+        //         'email' => $this->email,
+        //         'password' => Hash::make($this->password),
+        //     ],
+        //     [
+        //         'name' => $this->name,
+        //         'is_active'  => $this->is_active,
+        //         'profile_photo_path' => $image,
+        //     ]
+        // );
         // dd($user);
 
         $this->ModalAddEdit = false;
         $this->mode = null; // crear/editar registro
 
-        return back()->with('message', __('Mensaje'));
+        session()->flash('message', "User" . $this->mode ? " created " : " updated " . "successfully");
+        // return back()->with('message', __('Mensaje'));
     }
+
     public function fncSelectRol()
     {
         dd($this->roles2);

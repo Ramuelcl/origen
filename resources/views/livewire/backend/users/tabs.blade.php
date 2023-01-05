@@ -8,6 +8,14 @@
         <a class="px-4 border-b-2 border-gray-900 hover:border-teal-300" href="#" x-on:click.prevent="tab='#tab3'">{{__("Permissions")}}</a>
 
     </div>
+    <!-- <div class="flex min-h-screen w-full items-center justify-center">
+        <div x-data="{ filters: ['User', 'Roles', 'Permissions'], selected: 'User' }" class="inline-flex rounded-lg my-3 bg-gray-100 bg-opacity-30 mx-auto">
+            <template x-for="(filter, index) in filters">
+                <button @click="selected = filter" :class="[(index === filters.length -1) && '!rounded-r-lg', (index === 0) && '!rounded-l-lg', filter === selected && 'border-green-500 bg-green-500 text-white']" class="py-[10px] sm:py-2 my-1 px-[12px] sm:px-6 inline-flex items-center justify-center font-medium border border-gray-50 text-center focus:bg-primary text-black text-sm sm:text-base capitalize bg-white" x-text="filter">
+                </button>
+            </template>
+        </div>
+    </div> -->
     <div id="usuarios" x-show="tab == '#tab1'" x-cloak>
         <div class="col-span-6 sm:col-span-4 mb-4">
             {{ __('Name')}}
@@ -58,14 +66,35 @@
 
     </div>
     <div id="roles" x-show="tab == '#tab2'" x-cloak>
-        <x-jet-checkbox wire:model="allRoles" class="mr-2">{{ __('All')}}</x-jet-checkbox>
-        <x-jet-button wire:model="addRoles" class="mr-2">{{ __('Add')}}</x-jet-button>
+        <table>
+            <thead>
+                <tr>
+                    <th>User <x-jet-checkbox wire:model="allRoles" class="mr-2" /></th>
+                    <th>System</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td><x-jet-checkbox wire:model="allRoles" class="mr-2">{{ __('All')}}</x-jet-checkbox></td>
+                    <td><x-jet-button wire:model="addRoles" class="mr-2">{{ __('Add')}}</x-jet-button></td>
+                </tr> -->
+                @foreach($roles as $role)
+                <tr>
+                    <td>
+                        @if($role['guard_name']==='web')
+                        <x-jet-checkbox wire:model="roles[]">{{ $role['name'] }}</x-jet-checkbox>
+                        @endif
+                    </td>
+                    <td>
+                        @if($role['guard_name']==='sys')
+                        <x-jet-checkbox wire:model="roles[]">{{ $role['name'] }}</x-jet-checkbox>
+                        @endif
+                    </td>
 
-        @foreach($roles as $role)
-        <div class="flex-row">
-            <x-jet-checkbox wire:model="roles[]">{{ $role['name'] }}</x-jet-checkbox>
-        </div>
-        @endforeach
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
     <div id="permisos" x-show="tab == '#tab3'" x-cloak>
         <x-jet-checkbox wire:model="allPermissions" class="mr-2">{{ __('All')}}</x-jet-checkbox>

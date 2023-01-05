@@ -11,6 +11,7 @@
                         </div>
                     </div>
                 </div>
+                @if($users->count())
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
@@ -91,6 +92,7 @@
                         @endforeach
                     </tbody>
                 </table>
+
                 <div class="bg-white px-4 py-1 flex items-center justify-between border-t border-gray-200 sm:px-2">
                     <select wire:model="strRegs" class="text-xs">
                         <option value="5">5</option>
@@ -100,6 +102,9 @@
                     </select>
                     {{$users->links()}}
                 </div>
+                @else
+                {{__('No records')}}
+                @endif
             </div>
         </div>
     </div>

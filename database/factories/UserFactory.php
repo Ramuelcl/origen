@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
+// use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Jetstream\Features;
@@ -27,6 +27,9 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $filePath = 'public/images/avatars';
+        Storage::deleteDirectory($filePath);
+
         $name = $this->faker->lastName();
         $prename = $this->faker->unique()->firstName();
 
@@ -52,19 +55,20 @@ class UserFactory extends Factory
         // $path2=storage_path();
         // $path2=public_path().'\\images\\';
         // $avatar= $this->faker->image($path, 640, 480, null, false);
-        // $avatar1= $this->faker->imageUrl(640, 480, null, false);
+        $avatar = $this->faker->image(
+            $dir = storage_path($filePath),
+            $width = 640,
+            $height = 480,
+            $category = $this->getIniciales($prename . ' ' . $name), /* usado como texto sobre la imagen,default null */
+            $fullPath = true,
+            $randomize = true, // it's a no randomize images (default: `true`)
+            $word = null, //it's a filename without path
+            $gray = false,
+            $format = 'png'
+        );
 
-        // $avatar= $this->faker->image(
-        //     $dir = $folder,
-        //     $width = 640,
-        //     $height = 480,
-        //     $category=$this->getIniciales($prename.' '.$name), /* usado como texto sobre la imagen,default null */
-        //     $fullPath=true,
-        //     $randomize=true,// it's a no randomize images (default: `true`)
-        //     $word=null, //it's a filename without path
-        //     $gray=false,
-        //     $format='png'
-        // );
+        $avatar = $this->faker->imageUrl(640, 480, null, false);
+
         // dd($avatar, $avatar1, public_path('avatars'));
         // echo($avatar);
         // TODO: registrar foto en directorio, no se queda, se borra sola inmediatamente
@@ -73,9 +77,12 @@ class UserFactory extends Factory
             // 'prename' => $prename,
             'email' => $email . '@' . $this->faker->freeEmailDomain(),
             'email_verified_at' => now(),
-            // 'profile_photo_path'=>$avatar1,
+            'profile_photo_path' => $avatar,
+
+
             'is_active' => $this->faker->boolean(),
-            'password' => Hash::make('password'),
+            // 'password' => Hash::make('password'),
+            'password' => 'password',
             'remember_token' => Str::random(10),
         ];
     }

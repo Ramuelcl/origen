@@ -11,16 +11,15 @@ class RoleSeeder extends Seeder
 {
     private $roles = [
         // tabla roles
-        'user',
-        'writer',
-        'editor',
-        'moderator',
-        'admin',
-        'super-admin',
-        // nombre de sistemas creados
-        'Blog',
-        'Banca',
-        'Obrero',
+        ['user', 'web'],
+        ['writer', 'web'],
+        ['editor', 'web'],
+        ['moderator', 'web'],
+        ['admin', 'web'],
+        ['super-admin', 'web'],
+        ['Blog', 'sys'],
+        ['Banca', 'sys'],
+        ['HorTrabajo', 'sys'],
     ];
     private $permissions = [
         // tabla permisos
@@ -48,12 +47,13 @@ class RoleSeeder extends Seeder
 
         // create roles and assign created permissions
         foreach ($this->roles as $key => $value) {
-            $role = Role::create(['name' => $value]);
+            $role = Role::create(['name' => $value[0], 'guard_name' => $value[1]]);
             // if ($value=='super-admin') {
             //     // dd($value);
             //     $role->givePermissionTo($permissions);
             // }
         }
+
 
         // $role = Role::create(['name' => 'writer']);
         // $permission = Permission::create(['name' => 'edit articles']);
