@@ -73,7 +73,7 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <x-jet-dialog-modal wire:model="confirmMarcadorDelete">
+    <x-jet-dialog-modal wire:model="DeleteConfirm">
         <x-slot name="title">
             {{ __('Delete Marcador') }}
             <hr>
