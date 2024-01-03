@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
-// use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Jetstream\Features;
@@ -19,6 +19,7 @@ class UserFactory extends Factory
      * @var string
      */
     protected $model = User::class;
+    protected $table = 'users';
 
     /**
      * Define the model's default state.
@@ -30,26 +31,8 @@ class UserFactory extends Factory
         $filePath = 'public/images/avatars';
         Storage::deleteDirectory($filePath);
 
-        $name = $this->faker->lastName();
-        $prename = $this->faker->unique()->firstName();
-
-        $i = $this->faker->numberBetween($min = 0, $max = 6);
-        if ($i == 0) {
-            $email = "$name$prename";
-        } elseif ($i == 1) {
-            $email = "$prename.$name";
-        } elseif ($i == 2) {
-            $email = "$name.$prename";
-        } elseif ($i == 3) {
-            $email = "$prename$name";
-        } elseif ($i == 4) {
-            $email = $name . '_' . $prename;
-        } elseif ($i == 5) {
-            $email = $prename . '_' . $name;
-        } else {
-            $email = $this->faker->userName();
-        }
-        $email = \limpiar_caracteres($email);
+        // genera el nombre, prenombre y de ESTOS el eMail
+        include_once('include_eMail.php');
 
         // $path=public_path('avatars');
         // $path2=storage_path();
@@ -75,10 +58,9 @@ class UserFactory extends Factory
         return [
             'name' => $name . " " . $prename,
             // 'prename' => $prename,
-            'email' => $email . '@' . $this->faker->freeEmailDomain(),
+            'email' => $email,
             'email_verified_at' => now(),
             'profile_photo_path' => $avatar,
-
 
             'is_active' => $this->faker->boolean(),
             // 'password' => Hash::make('password'),

@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\backend\Categoria;
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
 
 class CategoriaSeeder extends Seeder
 {
