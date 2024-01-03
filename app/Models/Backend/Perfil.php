@@ -13,7 +13,7 @@ class Perfil extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'perfiles';
-    protected $tabla=15000;
+    protected $tabla = 15000;
     /**
      * The attributes that are mass assignable.
      *
@@ -37,8 +37,8 @@ class Perfil extends Model
     //     return $this->hasOne(\App\Models\User::class);
     // }
 
-    // relacion 1:1 iversa
-    public function user()
+    // relacion 1:1 inversa
+    public function r_user()
     {
         // $user = User::find( $this->user_id);
         // return $user;
@@ -49,8 +49,9 @@ class Perfil extends Model
         // la que más se utiliza
         return $this->belongsTo(\App\Models\User::class);
     }
-    public function profesion_id($id = null){
-        if($id !== null){
+    public function profesion_id($id = null)
+    {
+        if ($id !== null) {
             $profesion = Tabla::find()
                 ->where('tabla', $this->tabla)
                 // ->where('activo', true)
@@ -58,12 +59,13 @@ class Perfil extends Model
                 ->limit(1)
                 ->get();
             return $profesion;
-        }else{
+        } else {
             return 'debe indicar ID de Profesión';
         }
     }
-    public function profesion_rnd(){
-         return Tabla::orderByRaw('RAND()')
+    public function profesion_rnd()
+    {
+        return Tabla::orderByRaw('RAND()')
             ->where('tabla', 15000)
             ->where('activo', true)
             ->limit(1)

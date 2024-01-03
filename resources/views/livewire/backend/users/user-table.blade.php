@@ -7,7 +7,7 @@
                         <x-jet-input wire:model="Search" type="search" class="form-input w-full mx-6" placeholder="{{ __('Search') }}" />
                         <div class="flex-col my-1">
                             <x-jet-checkbox wire:model="onlyActive" class="mr-2">Activos?</x-jet-checkbox>
-                            <x-jet-button wire:click="clear" class="btn btn-green h-6 text-xs justify-between"><i class="fa-solid fa-eraser ">{{__(' Clear')}}</i></x-jet-button>
+                            <x-jet-button wire:click="clear" class="btn btn-green h-6 text-xs justify-between"><i class="fa-solid fa-eraser ">{{__(' blnClear')}}</i></x-jet-button>
                         </div>
                     </div>
                 </div>
